@@ -41,6 +41,7 @@
         <GameDirectory>V:\Steam\steamapps\common\Lethal Company</GameDirectory>
         <LibraryDirectory>../lib</LibraryDirectory>
         <DebugLibraryDirectory>V:\LC-ModLibraries</DebugLibraryDirectory>
+        <DebugProfile>V:\GaleModManager\gale\lethal-company\profiles\Andrey's Testing Profile\BepInEx\plugins\WeatherRegistry</DebugProfile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -63,10 +64,9 @@
         <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" Publicize="true" PrivateAssets="all"/>
     </ItemGroup>
 
-    <!-- <ItemGroup>
+    <ItemGroup>
         <PackageReference Include="mrov.MrovLib" Version="*-*" Publicize="true" PrivateAssets="all"/>
-        <PackageReference Include="mrov.WeatherRegistry" Version="*-*" Publicize="true" PrivateAssets="all"/>
-    </ItemGroup> -->
+    </ItemGroup>
 
     <!-- minver reference -->
     <ItemGroup>
@@ -75,7 +75,7 @@
 
     <!-- evaisa's netcode patch -->
     <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
-        <Exec Command="dotnet tool run netcode-patch -uv 2022.3.62 -nv 1.12.0 -tv 1.0.0 &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/>
+        <!-- <Exec Command="dotnet tool run netcode-patch -uv 2022.3.62 -nv 1.12.0 -tv 1.0.0 &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/> -->
     </Target>
 
     <!-- minver check for the tag name -->
