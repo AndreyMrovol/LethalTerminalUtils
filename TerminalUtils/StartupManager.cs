@@ -1,3 +1,5 @@
+using TerminalUtils.Commands;
+
 namespace TerminalUtils
 {
 	public static class StartupManager
@@ -5,6 +7,11 @@ namespace TerminalUtils
 		public static void Init(Terminal _instance)
 		{
 			TerminalManager.Init(_instance);
+
+			CommandManager.Init();
+
+			PreviewCommand previewCommand = new();
+			CommandManager.Commands.Add(previewCommand);
 		}
 	}
 }

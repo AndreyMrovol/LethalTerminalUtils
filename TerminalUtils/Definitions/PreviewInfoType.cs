@@ -4,6 +4,8 @@ namespace TerminalUtils.Definitions
 {
 	public class PreviewInfoType : TerminalInfoType
 	{
+		public int MaxLength { get; set; } = Defaults.terminalWidth;
+
 		public PreviewInfoType(string Name)
 		{
 			this.Name = Name;
@@ -11,8 +13,18 @@ namespace TerminalUtils.Definitions
 		}
 	}
 
-	public class PreviewInfoType<T>(string Name) : PreviewInfoType(Name)
+	public abstract class PreviewInfoType<T>(string Name) : PreviewInfoType(Name)
 	{
+		public string ValueWithMaxLength(T inputValue)
+		{
+			string value = Value(inputValue);
+			if (value.Length > MaxLength)
+			{
+				value = value.Substring(0, MaxLength - 3) + "...";
+			}
+			return value;
+		}
+
 		public virtual string Value(T inputValue)
 		{
 			return "";

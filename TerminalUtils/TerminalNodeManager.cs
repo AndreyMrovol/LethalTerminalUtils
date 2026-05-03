@@ -1,0 +1,70 @@
+using System.Collections.Generic;
+using System.Linq;
+using MrovLib;
+using UnityEngine;
+
+namespace TerminalUtils
+{
+	public class TerminalNodeManager
+	{
+		internal static TerminalNode lastResolvedNode = null;
+
+		public static void Init()
+		{
+			
+		}
+
+		public static TerminalKeyword AddVerb(string name, string word)
+		{
+			TerminalKeyword verb = ScriptableObject.CreateInstance<TerminalKeyword>();
+			verb.name = name;
+			verb.word = word;
+			verb.isVerb = true;
+
+			ContentManager.AddTerminalKeywords([verb]);
+			return verb;
+		}
+
+		public static void AddTerminalContent(List<TerminalNode> terminalNodes = null, List<TerminalKeyword> terminalKeywords = null)
+		{
+			if (terminalNodes != null && terminalNodes.Count > 0)
+			{
+				ContentManager.AddTerminalNodes(terminalNodes);
+			}
+
+			if (terminalKeywords != null && terminalKeywords.Count > 0)
+			{
+				ContentManager.AddTerminalKeywords(terminalKeywords);
+			}
+		}
+
+		public static TerminalNode CreateTerminalNode(string name, string terminalEvent = "")
+		{
+			TerminalNode terminalNode = ScriptableObject.CreateInstance<TerminalNode>();
+
+			terminalNode.name = name;
+			terminalNode.terminalEvent = terminalEvent;
+
+			terminalNode.displayText = "";
+
+			terminalNode.clearPreviousText = true;
+			terminalNode.acceptAnything = true;
+
+			terminalNode.terminalOptions = [];
+
+			terminalNode.maxCharactersToType = 25;
+			terminalNode.itemCost = 0;
+
+			terminalNode.buyItemIndex = -1;
+			terminalNode.buyVehicleIndex = -1;
+			terminalNode.buyRerouteToMoon = -1;
+			terminalNode.displayPlanetInfo = -1;
+			terminalNode.shipUnlockableID = -1;
+			terminalNode.creatureFileID = -1;
+			terminalNode.storyLogFileID = -1;
+			terminalNode.playSyncedClip = -1;
+
+			return terminalNode;
+		}
+	}
+}

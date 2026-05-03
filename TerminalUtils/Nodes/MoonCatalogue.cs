@@ -20,20 +20,27 @@ namespace TerminalUtils.Nodes
 			List<SelectableLevel> currentlySelectedLevels = TerminalManager.CurrentFilterInfoType.Filter(LevelHelper.Levels);
 			currentlySelectedLevels = TerminalManager.CurrentSortInfoType.Sort(currentlySelectedLevels);
 
+			Plugin.debugLogger.LogDebug(
+				$"Current preview types: {string.Join(", ", TerminalManager.CurrentPreviewInfoType.Select(info => info.Name))}"
+			);
+
 			var outputString = new StringBuilder();
 			var table = new ConsoleTables.ConsoleTable(TerminalManager.CurrentPreviewInfoType.Select(info => info.Name).ToArray());
 
 			int itemCount = 1;
 
+			List<PreviewInfoType<SelectableLevel>> currentPreviewTypes = TerminalManager.CurrentPreviewInfoType;
+
 			foreach (SelectableLevel level in currentlySelectedLevels)
 			{
-				string[] rowItems = TerminalManager.CurrentPreviewInfoType.Select(info => info.Value(level)).ToArray();
+				Plugin.debugLogger.LogDebug($"Current preview types: {string.Join(", ", currentPreviewTypes.Select(info => info.Name))}");
+				string[] rowItems = currentPreviewTypes.Select(info => info.Value(level)).ToArray();
 				table.AddRow(rowItems);
 
 				if (itemCount % 3 == 0)
 				{
 					itemCount = 1;
-					table.AddRow("", "", "");
+					table.AddRow(currentPreviewTypes.Select(_ => "").ToArray());
 				}
 				else
 				{
@@ -49,7 +56,7 @@ namespace TerminalUtils.Nodes
 			outputString.Append(table.ToStringCustomDecoration());
 
 			outputString.AppendLine(
-				$"PREVIEW: {string.Join(", ", TerminalManager.CurrentPreviewInfoType.Select(info => info.Name))}\nSORT: {TerminalManager.CurrentSortInfoType.Name}; FILTER: {TerminalManager.CurrentFilterInfoType.Name}"
+				$"PREVIEW: {string.Join(", ", currentPreviewTypes.Select(info => info.Name))}\nSORT: {TerminalManager.CurrentSortInfoType.Name}; FILTER: {TerminalManager.CurrentFilterInfoType.Name}"
 			);
 
 			return outputString.ToString().TrimEnd();
