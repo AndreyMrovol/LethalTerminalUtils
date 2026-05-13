@@ -1,7 +1,7 @@
 using MrovLib;
 using TerminalUtils.Definitions;
 
-namespace TerminalUtils.DisplayTypes
+namespace TerminalUtils.InfoTypes.Moons
 {
 	public class PreviewName : PreviewInfoType<SelectableLevel>
 	{

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MrovLib;
 using TerminalUtils.Definitions;
 
-namespace TerminalUtils.SortTypes
+namespace TerminalUtils.InfoTypes.Moons
 {
 	public class SortPrice : SortInfoType<SelectableLevel>
 	{

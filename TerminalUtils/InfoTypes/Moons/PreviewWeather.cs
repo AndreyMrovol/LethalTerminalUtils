@@ -1,6 +1,6 @@
 using TerminalUtils.Definitions;
 
-namespace TerminalUtils.DisplayTypes
+namespace TerminalUtils.InfoTypes.Moons
 {
 	public class PreviewWeather : PreviewInfoType<SelectableLevel>
 	{

@@ -3,10 +3,9 @@ using System.Linq;
 using MonoMod.Utils;
 using MrovLib;
 using TerminalUtils.Definitions;
-using TerminalUtils.DisplayTypes;
 using TerminalUtils.Enums;
+using TerminalUtils.InfoTypes.Moons;
 using TerminalUtils.Nodes;
-using TerminalUtils.SortTypes;
 
 namespace TerminalUtils
 {

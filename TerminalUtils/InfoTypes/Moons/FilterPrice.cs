@@ -3,7 +3,7 @@ using System.Linq;
 using MrovLib;
 using TerminalUtils.Definitions;
 
-namespace TerminalUtils.DisplayTypes
+namespace TerminalUtils.InfoTypes.Moons
 {
 	public class FilterPrice : FilterInfoType<SelectableLevel>
 	{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using TerminalUtils.Definitions;
 
-namespace TerminalUtils.SortTypes
+namespace TerminalUtils.InfoTypes.Moons
 {
 	public class SortName : SortInfoType<SelectableLevel>
 	{

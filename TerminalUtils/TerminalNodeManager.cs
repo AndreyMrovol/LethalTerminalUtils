@@ -9,10 +9,7 @@ namespace TerminalUtils
 	{
 		internal static TerminalNode lastResolvedNode = null;
 
-		public static void Init()
-		{
-			
-		}
+		public static void Init() { }
 
 		public static TerminalKeyword AddVerb(string name, string word)
 		{
