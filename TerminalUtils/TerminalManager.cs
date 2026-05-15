@@ -42,7 +42,9 @@ namespace TerminalUtils
 			NodeReplacements = new Dictionary<TerminalNode, TerminalNodeReplacement>
 			{
 				{ MoonsPage, new MoonCatalogue() },
-				// { StorePage, new StoreCatalogue() }
+				// { CommandManager.RedirectToMoonsNode, new MoonCatalogue() },
+				// { StorePage, new StoreCatalogue() },
+				// { CommandManager.RedirectToStoreNode, new StoreCatalogue() },
 			};
 		}
 
@@ -58,6 +60,8 @@ namespace TerminalUtils
 			SortInfoTypes.Add("Price", new SortPrice());
 
 			FilterInfoTypes.Add("None", new FilterNone());
+			FilterInfoTypes.Add("Price", new FilterPrice());
+			FilterInfoTypes.Add("Weather", new FilterWeather());
 		}
 	}
 }

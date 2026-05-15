@@ -7,7 +7,10 @@ namespace TerminalUtils.Commands
 	public class PreviewCommand : TerminalCommandNode
 	{
 		public PreviewCommand()
-			: base("preview") { }
+			: base("preview")
+		{
+			RedirectToNode = CommandManager.RedirectToMoonsNode;
+		}
 
 		public override string Execute(string[] args)
 		{

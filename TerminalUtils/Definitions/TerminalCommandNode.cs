@@ -9,6 +9,8 @@ namespace TerminalUtils.Definitions
 		public bool HostOnly { get; set; } = false;
 		public int TerminalSound { get; set; } = -1;
 
+		public TerminalNode RedirectToNode { get; set; } = null;
+
 		public virtual bool ShouldRun()
 		{
 			return (HostOnly && !StartOfRound.Instance.IsHost) ? false : true;

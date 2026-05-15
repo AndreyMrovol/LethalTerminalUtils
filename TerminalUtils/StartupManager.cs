@@ -12,6 +12,12 @@ namespace TerminalUtils
 
 			PreviewCommand previewCommand = new();
 			CommandManager.Commands.Add(previewCommand);
+
+			SortCommand sortCommand = new();
+			CommandManager.Commands.Add(sortCommand);
+
+			FilterCommand filterCommand = new();
+			CommandManager.Commands.Add(filterCommand);
 		}
 	}
 }
