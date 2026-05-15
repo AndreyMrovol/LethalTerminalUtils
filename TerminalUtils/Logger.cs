@@ -9,7 +9,7 @@ namespace TerminalUtils
 			: base(SourceName, defaultLoggingType)
 		{
 			ModName = SourceName;
-			LogSource = BepInEx.Logging.Logger.CreateLogSource("TerminalFormatter");
+			LogSource = BepInEx.Logging.Logger.CreateLogSource("TerminalUtils");
 			_name = SourceName;
 		}
 
