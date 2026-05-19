@@ -48,12 +48,14 @@ namespace TerminalUtils.Nodes
 				}
 			}
 
-			outputString.AppendLine("Moon Catalogue");
 			outputString.AppendLine(this.HelpText != null ? $"\n{this.HelpText}\n\n" : "");
 
 			outputString.Append($" The Company // Buying at {Mathf.RoundToInt(StartOfRound.Instance.companyBuyingRate * 100f)}% \n\n");
 
 			outputString.Append(table.ToStringCustomDecoration());
+
+			outputString.AppendLine();
+			outputString.AppendLine();
 
 			outputString.AppendLine(
 				$"PREVIEW: {string.Join(", ", currentPreviewTypes.Select(info => info.Name))}\nSORT: {TerminalManager.CurrentSortInfoType.Name}; FILTER: {TerminalManager.CurrentFilterInfoType.Name}"
