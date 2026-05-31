@@ -106,7 +106,7 @@ namespace TerminalUtils.Compatibility
 				int paddingNeeded = Mathf.Max(20 - dungeonName.Length, 0);
 				builder.Append($"* {dungeonName}{new string(' ', paddingNeeded)}");
 
-				int weight = (int)(possibleDungeonWeights[i] * 100);
+				int weight = (int)possibleDungeonWeights[i];
 
 				result[dungeonName] = weight;
 			}
