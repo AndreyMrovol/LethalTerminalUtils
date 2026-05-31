@@ -9,7 +9,7 @@ namespace TerminalUtils.Commands
 		public FilterCommand()
 			: base("filter")
 		{
-			RedirectToNode = CommandManager.RedirectToMoonsNode;
+			RedirectToNode = TerminalManager.MoonsPage;
 		}
 
 		public override string Execute(string[] args)

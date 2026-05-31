@@ -9,7 +9,7 @@ namespace TerminalUtils.Commands
 		public SortCommand()
 			: base("sort")
 		{
-			RedirectToNode = CommandManager.RedirectToMoonsNode;
+			RedirectToNode = TerminalManager.MoonsPage;
 		}
 
 		public override string Execute(string[] args)

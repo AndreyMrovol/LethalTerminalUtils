@@ -9,7 +9,7 @@ namespace TerminalUtils.Commands
 		public PreviewCommand()
 			: base("preview")
 		{
-			RedirectToNode = CommandManager.RedirectToMoonsNode;
+			RedirectToNode = TerminalManager.MoonsPage;
 		}
 
 		public override string Execute(string[] args)
