@@ -44,7 +44,7 @@
 
     <ItemGroup>        
         <Reference Include="MMHOOK_Assembly-CSharp">
-            <HintPath>$(LibraryDirectory)/MMHOOK_Assembly-CSharp.dll</HintPath>
+            <HintPath>../lib/MMHOOK_Assembly-CSharp.dll</HintPath>
         </Reference>
 
         <PackageReference Include="IAmBatby-LethalLevelLoader" Version="*-*" Publicize="true" PrivateAssets="all"/>
