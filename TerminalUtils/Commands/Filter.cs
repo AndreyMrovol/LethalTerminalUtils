@@ -33,6 +33,7 @@ namespace TerminalUtils.Commands
 				});
 
 			TerminalManager.CurrentFilterInfoType = infoTypes[filterTypeName];
+			ConfigManager.FilterInfoType.Value = infoTypes[filterTypeName].Name;
 
 			return "";
 		}

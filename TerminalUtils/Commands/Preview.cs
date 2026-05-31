@@ -31,6 +31,7 @@ namespace TerminalUtils.Commands
 				});
 
 			TerminalManager.CurrentPreviewInfoType = previewTypeNames.Select(name => infoTypes[name]).ToList();
+			ConfigManager.PreviewInfoType.Value = string.Join(";", TerminalManager.CurrentPreviewInfoType.Select(info => info.Name));
 
 			return "";
 		}

@@ -33,6 +33,7 @@ namespace TerminalUtils.Commands
 				});
 
 			TerminalManager.CurrentSortInfoType = infoTypes[sortTypeName];
+			ConfigManager.SortInfoType.Value = infoTypes[sortTypeName].Name;
 
 			return "";
 		}
