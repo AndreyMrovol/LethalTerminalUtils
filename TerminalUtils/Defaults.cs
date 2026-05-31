@@ -11,7 +11,7 @@ namespace TerminalUtils
 
 		internal static readonly int dividerLength = 17;
 
-		internal static readonly string defaultPreviewType = "Price;Weather";
+		internal static readonly string defaultPreviewType = "Name;Price;Weather";
 		internal static readonly string defaultFilterType = "None";
 		internal static readonly string defaultSortType = "None";
 	}
