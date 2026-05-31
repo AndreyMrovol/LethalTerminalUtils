@@ -1,3 +1,3 @@
 # 0.0.1
 
-- Initial release
+- hey, this is a first version!
