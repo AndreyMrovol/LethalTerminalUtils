@@ -12,7 +12,7 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override List<SelectableLevel> Filter(List<SelectableLevel> inputList)
 		{
-			return inputList.Where(lvl => ContentManager.RouteDictionary.GetRoute(lvl).Price >= ContentManager.Terminal.groupCredits).ToList();
+			return inputList.Where(lvl => ContentManager.RouteDictionary.GetRoute(lvl).Price <= ContentManager.Terminal.groupCredits).ToList();
 		}
 	}
 }
