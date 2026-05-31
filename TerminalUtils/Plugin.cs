@@ -17,6 +17,7 @@ namespace TerminalUtils
 		internal static Harmony harmony = new(MyPluginInfo.PLUGIN_GUID);
 
 		internal static LethalLevelLoaderCompatibility LLLCompatibility = new("imabatby.lethallevelloader");
+		internal static DawnLibCompatibility DawnCompatibility = new("com.github.teamxiaolan.dawnlib");
 
 		private void Awake()
 		{

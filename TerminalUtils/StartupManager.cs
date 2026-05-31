@@ -18,6 +18,9 @@ namespace TerminalUtils
 
 			FilterCommand filterCommand = new();
 			CommandManager.Commands.Add(filterCommand);
+
+			SimulateCommand simulateCommand = new();
+			CommandManager.Commands.Add(simulateCommand);
 		}
 	}
 }
