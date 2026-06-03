@@ -30,10 +30,20 @@ namespace TerminalUtils.Nodes
 			int itemCount = 1;
 
 			List<PreviewInfoType<SelectableLevel>> currentPreviewTypes = TerminalManager.CurrentPreviewInfoType;
+			Plugin.debugLogger.LogDebug($"Current preview types: {string.Join(", ", currentPreviewTypes.Select(info => info.Name))}");
 
 			foreach (SelectableLevel level in currentlySelectedLevels)
 			{
-				Plugin.debugLogger.LogDebug($"Current preview types: {string.Join(", ", currentPreviewTypes.Select(info => info.Name))}");
+				if (LevelHelper.IsHidden(level))
+				{
+					continue;
+				}
+
+				if (MrovLib.Defaults.VanillaHiddenMoons.Contains(StringResolver.GetNumberlessName(level)))
+				{
+					continue;
+				}
+
 				string[] rowItems = currentPreviewTypes.Select(info => info.Value(level)).ToArray();
 				table.AddRow(rowItems);
 
