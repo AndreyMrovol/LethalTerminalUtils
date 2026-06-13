@@ -10,8 +10,7 @@ namespace TerminalUtils.Patches
 	{
 		[HarmonyPrefix]
 		[HarmonyPatch("LoadNewNode")]
-		// [HarmonyPriority(Priority.Last)]
-		[HarmonyAfter("imabatby.lethallevelloader", "com.github.teamxiaolan.dawnlib", "mrov.TerminalFormatter")]
+		[HarmonyAfter("imabatby.lethallevelloader", "com.github.teamxiaolan.dawnlib")]
 		public static bool PatchMethod(Terminal __instance, TerminalNode node)
 		{
 			if (!NodeReplacementManager.ReplaceNode)
@@ -36,7 +35,7 @@ namespace TerminalUtils.Patches
 				}
 
 				builder.Append("\n\n");
-				builder.Append(replacement.GetNodeText());
+				builder.Append(replacement.GetNodeText(node));
 				builder.Append($"\n{new string('-', 17)}\n");
 
 				__instance.LoadTerminalImage(node);
