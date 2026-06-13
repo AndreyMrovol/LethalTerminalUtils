@@ -15,7 +15,7 @@ namespace TerminalUtils.Nodes
 			this.HelpText = " Welcome to the exomoons catalogue! \n Use ROUTE to set the autopilot. \n Use INFO to learn about a moon.";
 		}
 
-		public override string GetNodeText()
+		public override string GetNodeText(TerminalNode node)
 		{
 			List<SelectableLevel> currentlySelectedLevels = TerminalManager.CurrentFilterInfoType.Filter(LevelHelper.Levels);
 			currentlySelectedLevels = TerminalManager.CurrentSortInfoType.Sort(currentlySelectedLevels);
