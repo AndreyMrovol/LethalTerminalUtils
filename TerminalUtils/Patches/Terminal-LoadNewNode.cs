@@ -14,6 +14,11 @@ namespace TerminalUtils.Patches
 		[HarmonyAfter("imabatby.lethallevelloader", "com.github.teamxiaolan.dawnlib", "mrov.TerminalFormatter")]
 		public static bool PatchMethod(Terminal __instance, TerminalNode node)
 		{
+			if (!NodeReplacementManager.ReplaceNode)
+			{
+				return true;
+			}
+
 			if (TerminalManager.NodeReplacements.ContainsKey(node))
 			{
 				__instance.modifyingText = true;
@@ -46,6 +51,13 @@ namespace TerminalUtils.Patches
 			}
 
 			return true;
+		}
+
+		[HarmonyPostfix]
+		[HarmonyPatch("LoadNewNode")]
+		public static void PatchMethod()
+		{
+			NodeReplacementManager.ReplaceNode = true;
 		}
 	}
 }
