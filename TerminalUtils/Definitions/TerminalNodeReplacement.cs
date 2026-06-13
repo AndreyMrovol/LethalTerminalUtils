@@ -13,19 +13,27 @@ namespace TerminalUtils.Definitions
 
 		public StringBuilder stringBuilder = new();
 
-		public virtual bool IsNodeValid(TerminalNode node, Terminal terminal)
+		public virtual bool IsNodeValid(TerminalNode node)
 		{
 			return true;
 		}
 
-		public abstract string GetNodeText();
+		public abstract string GetNodeText(TerminalNode node);
 
 		// constructor
-		public TerminalNodeReplacement(string name, TerminalNode NodeToMatch)
+		public TerminalNodeReplacement(string name, TerminalNode NodeToMatch, ConfigEntry<bool> enabled = null)
 		{
 			this.Name = name;
 			this.NodeToMatch = NodeToMatch;
-			this.Enabled = ConfigManager.configFile.Bind("Nodes", name, true, $"Enable node {name}");
+
+			if (enabled != null)
+			{
+				this.Enabled = enabled;
+			}
+			else
+			{
+				this.Enabled = ConfigManager.configFile.Bind("Nodes", name, true, $"Enable node {name}");
+			}
 
 			NodeReplacementManager.RegisteredNodes.Add(this);
 			Plugin.debugLogger.LogInfo($"Registered node {name}");
