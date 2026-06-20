@@ -17,6 +17,8 @@ namespace TerminalUtils
 
 		public static ConfigEntry<LoggingType> LoggingLevels { get; private set; }
 
+		public static ConfigEntry<int> LinesToScroll { get; private set; }
+
 		public static ConfigEntry<string> PreviewInfoType { get; private set; }
 		public static ConfigEntry<string> FilterInfoType { get; private set; }
 		public static ConfigEntry<string> SortInfoType { get; private set; }
@@ -26,6 +28,8 @@ namespace TerminalUtils
 			configFile = config;
 
 			LoggingLevels = configFile.Bind("Debug", "Logging Levels", LoggingType.Basic, "Set the logging level for the mod");
+
+			LinesToScroll = configFile.Bind("General", "Lines to Scroll", 15, "Number of lines to scroll per mouse wheel tick");
 
 			PreviewInfoType = configFile.Bind(
 				"General",
