@@ -14,5 +14,7 @@ namespace TerminalUtils
 		internal static readonly string defaultPreviewType = "Name;Price;Weather";
 		internal static readonly string defaultFilterType = "None";
 		internal static readonly string defaultSortType = "None";
+
+		internal static readonly string defaultStoreSortType = "Name";
 	}
 }
