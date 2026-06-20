@@ -32,19 +32,19 @@ namespace TerminalUtils
 			LinesToScroll = configFile.Bind("General", "Lines to Scroll", 15, "Number of lines to scroll per mouse wheel tick");
 
 			PreviewInfoType = configFile.Bind(
-				"General",
+				"Preferences",
 				"Preview Info Type",
 				Defaults.defaultPreviewType,
 				"Set the preview info type. Must be the name of an existing preview info type."
 			);
 			FilterInfoType = configFile.Bind(
-				"General",
+				"Preferences",
 				"Filter Info Type",
 				Defaults.defaultFilterType,
 				"Set the filter info type. Must be the name of an existing filter info type."
 			);
 			SortInfoType = configFile.Bind(
-				"General",
+				"Preferences",
 				"Sort Info Type",
 				Defaults.defaultSortType,
 				"Set the default sort info type. Must be the name of an existing sort info type."
