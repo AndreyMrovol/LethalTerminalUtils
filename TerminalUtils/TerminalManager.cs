@@ -44,12 +44,12 @@ namespace TerminalUtils
 			CurrentFilterInfoType = InfoTypeResolver.GetFilterInfoType(ConfigManager.FilterInfoType.Value);
 			CurrentSortInfoType = InfoTypeResolver.GetSortInfoType(ConfigManager.SortInfoType.Value);
 
+			CurrentStoreSortInfoType = InfoTypeResolver.GetStoreSortInfoType(ConfigManager.StoreSortInfoType.Value);
+
 			NodeReplacements = new Dictionary<TerminalNode, TerminalNodeReplacement>
 			{
 				{ MoonsPage, new MoonCatalogue() },
-				// { CommandManager.RedirectToMoonsNode, new MoonCatalogue() },
 				{ StorePage, new StoreCatalogue() },
-				// { CommandManager.RedirectToStoreNode, new StoreCatalogue() },
 			};
 		}
 
@@ -68,6 +68,7 @@ namespace TerminalUtils
 			FilterInfoTypes.Add("Price", new FilterPrice());
 			FilterInfoTypes.Add("Weather", new FilterWeather());
 
+			StoreSortInfoTypes.Add("None", new InfoTypes.Store.SortNone());
 			StoreSortInfoTypes.Add("Name", new InfoTypes.Store.SortName());
 			StoreSortInfoTypes.Add("Price", new InfoTypes.Store.SortPrice());
 		}
@@ -78,6 +79,13 @@ namespace TerminalUtils
 			currentlySelectedLevels = TerminalManager.CurrentSortInfoType.Sort(currentlySelectedLevels);
 
 			return currentlySelectedLevels;
+		}
+
+		public static List<BuyableThing> GetCurrentStoreItems()
+		{
+			List<BuyableThing> currentlySelectedItems = TerminalManager.CurrentStoreSortInfoType.Sort(ContentManager.Buyables);
+
+			return currentlySelectedItems;
 		}
 	}
 }

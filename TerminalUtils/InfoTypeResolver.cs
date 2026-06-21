@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MrovLib.ContentType;
 using TerminalUtils.Definitions;
 
 namespace TerminalUtils
@@ -50,6 +51,16 @@ namespace TerminalUtils
 			}
 
 			return TerminalManager.SortInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == name.ToLowerInvariant()).Value;
+		}
+
+		public static SortInfoType<BuyableThing> GetStoreSortInfoType(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return TerminalManager.StoreSortInfoTypes["None"];
+			}
+
+			return TerminalManager.StoreSortInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == name.ToLowerInvariant()).Value;
 		}
 	}
 }

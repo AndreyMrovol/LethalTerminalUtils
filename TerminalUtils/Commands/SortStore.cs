@@ -8,14 +8,9 @@ namespace TerminalUtils.Commands
 	public class StoreSortCommand : TerminalCommandNode
 	{
 		public StoreSortCommand()
-			: base("sort")
+			: base("store")
 		{
 			RedirectToNode = TerminalManager.StorePage;
-		}
-
-		public override bool ShouldRun()
-		{
-			return TerminalManager.Terminal.currentNode == TerminalManager.StorePage;
 		}
 
 		public override string Execute(string[] args)

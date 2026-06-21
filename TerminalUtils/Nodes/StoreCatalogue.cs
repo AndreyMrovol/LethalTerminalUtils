@@ -33,8 +33,9 @@ namespace TerminalUtils.Nodes
 				PurchaseType.Suit
 			];
 
-			Dictionary<PurchaseType, List<BuyableThing>> groupedThings = ContentManager
-				.Buyables.GroupBy(thing => thing.Type)
+			Dictionary<PurchaseType, List<BuyableThing>> groupedThings = TerminalManager
+				.GetCurrentStoreItems()
+				.GroupBy(thing => thing.Type)
 				.OrderBy(group =>
 				{
 					int idx = Array.IndexOf(desiredOrder, group.Key);
