@@ -45,6 +45,12 @@ namespace TerminalUtils
 				return CommandNode;
 			}
 
+			if (!command.ShouldRun())
+			{
+				CommandNode.displayText = $"Command '{command.Name}' cannot run!";
+				return CommandNode;
+			}
+
 			// run the command itself when
 			// there's no subcommands OR there's no subcommand specified
 
