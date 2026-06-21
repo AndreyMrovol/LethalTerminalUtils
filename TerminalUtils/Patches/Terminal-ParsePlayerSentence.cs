@@ -32,7 +32,7 @@ namespace TerminalUtils.Patches
 					{
 						string[] arguments = words.Skip(1).ToArray();
 
-						TerminalNode result = CommandManager.RunWeatherCommand(commandNode, arguments);
+						TerminalNode result = CommandManager.RunTerminalCommand(commandNode, arguments);
 
 						__result = result;
 						return false;

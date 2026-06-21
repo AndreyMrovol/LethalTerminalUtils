@@ -34,7 +34,7 @@ namespace TerminalUtils
 			RedirectToStoreNode.acceptAnything = false;
 		}
 
-		public static TerminalNode RunWeatherCommand(TerminalCommandNode command, string[] args)
+		public static TerminalNode RunTerminalCommand(TerminalCommandNode command, string[] args)
 		{
 			// CommandLookup.TryGetValue(commandName, out var command);
 			string result = "";
@@ -53,32 +53,30 @@ namespace TerminalUtils
 				Plugin.debugLogger.LogDebug($"Running command '{command.Name}' with no subcommand");
 				result = command.Execute(args);
 			}
+			else
+			{
+				// TODO: this requires additional testing cause it's not that great
 
-			// else
-			// {
-			// 	var commandname = args[0];
-			// 	Plugin.debugLogger.LogInfo($"Running subcommand '{commandname}' - is null? {commandname == null}");
+				Plugin.debugLogger.LogInfo(
+					$"Looking for subcommand '{args[0]}'; available: {string.Join(", ", command.Subcommands.ConvertAll(sc => sc.Name))}"
+				);
 
-			// 	Plugin.debugLogger.LogInfo(
-			// 		$"Looking for subcommand '{args[0]}'; available: {string.Join(", ", command.Subcommands.ConvertAll(sc => sc.Name))}"
-			// 	);
+				try
+				{
+					TerminalCommandNode subCommand = command.Subcommands.Find(sc => sc.Name == args[0]);
 
-			// 	try
-			// 	{
-			// 		TerminalCommandNode subCommand = command.Subcommands.Find(sc => sc.Name == args[0]);
+					if (subCommand == null)
+					{
+						result = $"Subcommand '{args[0]}' not found for command '{command.Name}'.";
+					}
 
-			// 		if (subCommand == null)
-			// 		{
-			// 			result = $"Subcommand '{args[0]}' not found for command '{command.Name}'.";
-			// 		}
-
-			// 		result = subCommand.Execute(args);
-			// 	}
-			// 	catch (System.Exception e)
-			// 	{
-			// 		Plugin.debugLogger.LogError($"Error finding subcommand: {e}");
-			// 	}
-			// }
+					result = subCommand.Execute(args);
+				}
+				catch (System.Exception e)
+				{
+					Plugin.debugLogger.LogError($"Error finding subcommand: {e}");
+				}
+			}
 
 			if (command.RedirectToNode != null)
 			{
