@@ -11,8 +11,6 @@ namespace TerminalUtils.Definitions
 		public TerminalNode NodeToMatch { get; set; }
 		public ConfigEntry<bool> Enabled { get; set; }
 
-		public StringBuilder stringBuilder = new();
-
 		public virtual bool IsNodeValid(TerminalNode node)
 		{
 			return true;
