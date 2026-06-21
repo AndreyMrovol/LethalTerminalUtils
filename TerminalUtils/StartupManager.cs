@@ -21,6 +21,9 @@ namespace TerminalUtils
 
 			SimulateCommand simulateCommand = new();
 			CommandManager.Commands.Add(simulateCommand);
+
+			StoreSortCommand storeSortCommand = new();
+			CommandManager.Commands.Add(storeSortCommand);
 		}
 	}
 }

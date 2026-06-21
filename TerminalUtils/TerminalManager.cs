@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoMod.Utils;
 using MrovLib;
+using MrovLib.ContentType;
 using TerminalUtils.Definitions;
 using TerminalUtils.Enums;
 using TerminalUtils.InfoTypes.Moons;
@@ -24,6 +25,12 @@ namespace TerminalUtils
 		public static FilterInfoType<SelectableLevel> CurrentFilterInfoType { get; set; }
 		public static SortInfoType<SelectableLevel> CurrentSortInfoType { get; set; }
 
+		#region Store
+		public static Dictionary<string, SortInfoType<BuyableThing>> StoreSortInfoTypes = [];
+		public static SortInfoType<BuyableThing> CurrentStoreSortInfoType { get; set; }
+
+		#endregion
+
 		public static Dictionary<TerminalNode, TerminalNodeReplacement> NodeReplacements = [];
 
 		internal static void Init(Terminal terminal)
@@ -41,7 +48,7 @@ namespace TerminalUtils
 			{
 				{ MoonsPage, new MoonCatalogue() },
 				// { CommandManager.RedirectToMoonsNode, new MoonCatalogue() },
-				// { StorePage, new StoreCatalogue() },
+				{ StorePage, new StoreCatalogue() },
 				// { CommandManager.RedirectToStoreNode, new StoreCatalogue() },
 			};
 		}
@@ -60,6 +67,9 @@ namespace TerminalUtils
 			FilterInfoTypes.Add("None", new FilterNone());
 			FilterInfoTypes.Add("Price", new FilterPrice());
 			FilterInfoTypes.Add("Weather", new FilterWeather());
+
+			StoreSortInfoTypes.Add("Name", new InfoTypes.Store.SortName());
+			StoreSortInfoTypes.Add("Price", new InfoTypes.Store.SortPrice());
 		}
 
 		public static List<SelectableLevel> GetCurrentLevels()

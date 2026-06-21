@@ -22,13 +22,54 @@ namespace TerminalUtils.Nodes
 			var table = new ConsoleTables.ConsoleTable("Name", "Price");
 			var stringBuilder = new StringBuilder();
 
+			stringBuilder.Append(this.HelpText != null ? $"\n{this.HelpText}\n" : "");
+
+			PurchaseType[] desiredOrder =
+			[
+				PurchaseType.Item,
+				PurchaseType.Vehicle,
+				PurchaseType.Unlockable,
+				PurchaseType.Decoration,
+				PurchaseType.Suit
+			];
+
 			Dictionary<PurchaseType, List<BuyableThing>> groupedThings = ContentManager
 				.Buyables.GroupBy(thing => thing.Type)
-				.ToDictionary(group => group.Key, group => group.ToList());
+				.OrderBy(group =>
+				{
+					int idx = Array.IndexOf(desiredOrder, group.Key);
+					return idx == -1 ? int.MaxValue : idx;
+				})
+				.ToDictionary(
+					group => group.Key,
+					group =>
+						group
+							.Where(item =>
+							{
+								switch (item.Type)
+								{
+									case PurchaseType.Unlockable:
+										BuyableUnlockable unlockable = (BuyableUnlockable)item;
+										return !unlockable.IsUnlocked;
+									case PurchaseType.Decoration:
+										BuyableDecoration decoration = (BuyableDecoration)item;
+										return !decoration.IsUnlocked;
+									case PurchaseType.Suit:
+										BuyableSuit suit = (BuyableSuit)item;
+										return !suit.IsUnlocked;
+									default:
+										return true;
+								}
+							})
+							.ToList()
+				);
 
 			foreach (var group in groupedThings)
 			{
-				Type buyableType = group.Value.First().GetType();
+				if (group.Value.Count == 0)
+				{
+					continue;
+				}
 
 				int itemCount = 1;
 
@@ -43,32 +84,14 @@ namespace TerminalUtils.Nodes
 					if (thing.Type == PurchaseType.Item)
 					{
 						BuyableItem item = (BuyableItem)thing;
-
-						string discountPercent = item.Discount != 0 ? $"  (-{item.PercentOff}%)" : "";
-						priceWithDiscount += discountPercent;
-					}
-
-					if (thing.Type == PurchaseType.Decoration)
-					{
-						BuyableDecoration decoration = (BuyableDecoration)thing;
-
-						if (decoration.IsUnlocked)
+						if (item.Discount != 0)
 						{
-							continue;
+							string discountPercent = item.Discount != 0 ? $"  (-{item.PercentOff}%)" : "";
+							priceWithDiscount += discountPercent;
 						}
 					}
 
-					if (thing.Type == PurchaseType.Suit)
-					{
-						BuyableSuit suit = (BuyableSuit)thing;
-
-						if (suit.IsUnlocked)
-						{
-							continue;
-						}
-					}
-
-					table.AddRow(thing.Name.PadRight(30), priceWithDiscount);
+					table.AddRow($"* {thing.Name.PadRight(30)}", $"{priceWithDiscount}");
 
 					if (ConfigManager.DivideStore.Value != 0 && i != group.Value.Count - 1)
 					{
@@ -86,7 +109,8 @@ namespace TerminalUtils.Nodes
 			}
 
 			string tableString = table.ToStringCustomDecoration(header: false, divider: true).TrimEnd();
-			return tableString;
+			stringBuilder.Append(tableString);
+			return stringBuilder.ToString().TrimEnd();
 		}
 	}
 }
