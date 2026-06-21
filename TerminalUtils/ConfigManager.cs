@@ -23,6 +23,10 @@ namespace TerminalUtils
 		public static ConfigEntry<string> FilterInfoType { get; private set; }
 		public static ConfigEntry<string> SortInfoType { get; private set; }
 
+		public static ConfigEntry<string> StoreSortInfoType { get; private set; }
+
+		public static ConfigEntry<int> DivideStore { get; private set; }
+
 		private ConfigManager(ConfigFile config)
 		{
 			configFile = config;
@@ -48,6 +52,20 @@ namespace TerminalUtils
 				"Sort Info Type",
 				Defaults.defaultSortType,
 				"Set the default sort info type. Must be the name of an existing sort info type."
+			);
+
+			StoreSortInfoType = configFile.Bind(
+				"Preferences",
+				"Store Sort Info Type",
+				Defaults.defaultStoreSortType,
+				"Set the default store sort info type. Must be the name of an existing store sort info type."
+			);
+
+			DivideStore = configFile.Bind(
+				"Store",
+				"Divide Store page into groups",
+				5,
+				"Set the number of items to divide the store into. 0 means no division."
 			);
 		}
 	}
