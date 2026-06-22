@@ -17,8 +17,7 @@ namespace TerminalUtils.Nodes
 
 		public override string GetNodeText(TerminalNode node)
 		{
-			List<SelectableLevel> currentlySelectedLevels = TerminalManager.CurrentFilterInfoType.Filter(LevelHelper.Levels);
-			currentlySelectedLevels = TerminalManager.CurrentSortInfoType.Sort(currentlySelectedLevels);
+			List<SelectableLevel> currentlySelectedLevels = TerminalManager.GetCurrentLevels();
 
 			Plugin.debugLogger.LogDebug(
 				$"Current preview types: {string.Join(", ", TerminalManager.CurrentPreviewInfoType.Select(info => info.Name))}"
@@ -44,7 +43,19 @@ namespace TerminalUtils.Nodes
 					continue;
 				}
 
-				string[] rowItems = currentPreviewTypes.Select(info => info.Value(level)).ToArray();
+				string[] rowItems = currentPreviewTypes
+					.Select(info =>
+					{
+						if (info.Name == "Name")
+						{
+							return $"* {info.Value(level)}";
+						}
+						else
+						{
+							return info.Value(level);
+						}
+					})
+					.ToArray();
 				table.AddRow(rowItems);
 
 				if (itemCount % 3 == 0)
