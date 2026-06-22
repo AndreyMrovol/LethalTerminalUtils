@@ -75,7 +75,7 @@ namespace TerminalUtils
 
 		public static List<SelectableLevel> GetCurrentLevels()
 		{
-			List<SelectableLevel> currentlySelectedLevels = TerminalManager.CurrentFilterInfoType.Filter(LevelHelper.Levels);
+			List<SelectableLevel> currentlySelectedLevels = TerminalManager.CurrentFilterInfoType.Filter(LevelHelper.Levels).ToList();
 			currentlySelectedLevels = TerminalManager.CurrentSortInfoType.Sort(currentlySelectedLevels);
 
 			return currentlySelectedLevels;
