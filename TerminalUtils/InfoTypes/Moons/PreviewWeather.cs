@@ -9,7 +9,7 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override string Value(SelectableLevel inputValue)
 		{
-			return inputValue.currentWeather.ToString();
+			return inputValue.currentWeather.ToString() == "None" ? "" : inputValue.currentWeather.ToString();
 		}
 	}
 }
