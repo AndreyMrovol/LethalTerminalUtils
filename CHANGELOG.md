@@ -1,3 +1,10 @@
+# 0.0.4
+
+- fixed moon catalogue displaying `None` as a weather
+- fixed moon catalogue ordering to match vanilla order (thanks, `cdub_12`!)
+- fixed moon catalogue not displaying `* ` decoration for moons
+- fixed disabled nodes from not being disabled
+
 # 0.0.3
 
 - added StoreCatalogue node
