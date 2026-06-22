@@ -25,6 +25,12 @@ namespace TerminalUtils.Patches
 
 				TerminalNodeReplacement replacement = TerminalManager.NodeReplacements[node];
 
+				if (!replacement.Enabled.Value)
+				{
+					Plugin.debugLogger.LogInfo($"Node replacement {replacement.Name} is disabled, skipping replacement");
+					return true;
+				}
+
 				Plugin.logger.LogInfo($"Replacing node {__instance.currentNode.name} with {replacement.Name}");
 
 				StringBuilder builder = new();
