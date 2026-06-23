@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using DunGen.Graph;
 using HarmonyLib;
 using LethalLevelLoader;
 
@@ -29,20 +28,6 @@ namespace TerminalUtils.Compatibility
 		public static bool IsLevelHidden(SelectableLevel level)
 		{
 			return MrovLib.SharedMethods.IsMoonHiddenLLL(level);
-		}
-
-		public static List<KeyValuePair<DungeonFlow, int>> GetDungeonFlowsWithRarity(SelectableLevel level)
-		{
-			List<KeyValuePair<DungeonFlow, int>> result = [];
-
-			LethalLevelLoader.LevelManager.TryGetExtendedLevel(level, out var extendedLevel);
-
-			LethalLevelLoader
-				.DungeonManager.GetValidExtendedDungeonFlows(extendedLevel, false)
-				.Select(flow => new KeyValuePair<DungeonFlow, int>(flow.extendedDungeonFlow.DungeonFlow, flow.rarity))
-				.Do(result.Add);
-
-			return result;
 		}
 
 		public static List<ExtendedDungeonFlowWithRarity> GetExtendedDungeonFlowsWithRarity(ExtendedLevel extendedLevel)

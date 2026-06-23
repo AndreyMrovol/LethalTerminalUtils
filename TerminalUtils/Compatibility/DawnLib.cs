@@ -4,8 +4,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using Dawn;
-using Dawn.Internal;
-using Dawn.Utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -32,11 +30,16 @@ namespace TerminalUtils.Compatibility
 
 		public (bool locked, bool hidden) GetLevelStatus(SelectableLevel level)
 		{
+			if (!this.IsModPresent)
+			{
+				return (false, false);
+			}
+
 			return level.GetDawnInfo().DawnPurchaseInfo.PurchasePredicate.CanPurchase() switch
 			{
-				TerminalPurchaseResult.HiddenPurchaseResult hiddenResult => (hiddenResult.IsFailure, true),
-				TerminalPurchaseResult.FailedPurchaseResult => (true, false),
-				TerminalPurchaseResult.SuccessPurchaseResult => (false, false),
+				Dawn.TerminalPurchaseResult.HiddenPurchaseResult hiddenResult => (hiddenResult.IsFailure, true),
+				Dawn.TerminalPurchaseResult.FailedPurchaseResult => (true, false),
+				Dawn.TerminalPurchaseResult.SuccessPurchaseResult => (false, false),
 				_ => (false, false)
 			};
 		}
@@ -73,7 +76,7 @@ namespace TerminalUtils.Compatibility
 				SpawnWeightContext ctx = new SpawnWeightContext(
 					relevantMoonInfo,
 					null,
-					TimeOfDayRefs.GetCurrentWeatherEffect(relevantMoonInfo.Level)?.GetDawnInfo()
+					Dawn.Internal.TimeOfDayRefs.GetCurrentWeatherEffect(relevantMoonInfo.Level)?.GetDawnInfo()
 				).WithExtra(SpawnWeightExtraKeys.RoutingPriceKey, relevantMoonInfo.DawnPurchaseInfo.Cost.Provide());
 
 				int rarity = dungeonInfo.Weights.GetFor(ctx) ?? 0;
