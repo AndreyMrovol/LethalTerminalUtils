@@ -1,3 +1,7 @@
+# 0.0.5
+
+- fixed an error with adding already existing info types to the terminal manager (thanks, `explodingturtles456`!)
+
 # 0.0.4
 
 - fixed moon catalogue displaying `None` as a weather
