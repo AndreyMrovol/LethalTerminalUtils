@@ -55,6 +55,11 @@ namespace TerminalUtils
 
 		private static void RegisterLocalInfoTypes()
 		{
+			PreviewInfoTypes.Clear();
+			SortInfoTypes.Clear();
+			FilterInfoTypes.Clear();
+			StoreSortInfoTypes.Clear();
+
 			PreviewInfoTypes.Add("Name", new PreviewName());
 			PreviewInfoTypes.Add("Price", new PreviewPrice());
 			PreviewInfoTypes.Add("Weather", new PreviewWeather());
