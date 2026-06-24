@@ -1,3 +1,7 @@
+# 0.0.6
+
+- fixed an error with the store catalogue displaying items not in rotation
+
 # 0.0.5
 
 - fixed an error with adding already existing info types to the terminal manager (thanks, `explodingturtles456`!)
