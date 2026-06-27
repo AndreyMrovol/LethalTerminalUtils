@@ -13,7 +13,7 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override string Value(SelectableLevel inputValue)
 		{
-			return MrovLib.StringResolver.GetAlphanumericName(inputValue);
+			return MrovLib.StringResolver.GetNumberlessName(inputValue);
 		}
 	}
 }

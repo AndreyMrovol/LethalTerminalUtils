@@ -17,7 +17,7 @@ namespace TerminalUtils.InfoTypes.Moons
 			string moonNumber = Regex.Match(inputValue.PlanetName, @"^\d+").Value;
 
 			{
-				return $"{moonNumber.PadLeft(3, '0')} {MrovLib.StringResolver.GetAlphanumericName(inputValue)}";
+				return $"{moonNumber.PadLeft(3, '0')} {MrovLib.StringResolver.GetNumberlessName(inputValue)}";
 			}
 		}
 	}
