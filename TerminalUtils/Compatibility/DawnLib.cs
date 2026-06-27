@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
-using System.Text;
 using Dawn;
 using HarmonyLib;
-using UnityEngine;
 
 namespace TerminalUtils.Compatibility
 {
@@ -87,28 +84,9 @@ namespace TerminalUtils.Compatibility
 				}
 			}
 
-			// sort by rarity
-			for (int i = 0; i < possibleDungeons.Count; i++)
-			{
-				for (int j = i + 1; j < possibleDungeons.Count; j++)
-				{
-					if (possibleDungeonWeights[i] < possibleDungeonWeights[j])
-					{
-						(possibleDungeons[i], possibleDungeons[j]) = (possibleDungeons[j], possibleDungeons[i]);
-						(possibleDungeonWeights[i], possibleDungeonWeights[j]) = (possibleDungeonWeights[j], possibleDungeonWeights[i]);
-					}
-				}
-			}
-
-			float sumOfWeights = possibleDungeonWeights.Sum();
 			for (int i = 0; i < possibleDungeons.Count; i++)
 			{
 				string dungeonName = possibleDungeons[i].DungeonFlow.name;
-
-				StringBuilder builder = new();
-				int paddingNeeded = Mathf.Max(20 - dungeonName.Length, 0);
-				builder.Append($"* {dungeonName}{new string(' ', paddingNeeded)}");
-
 				int weight = (int)possibleDungeonWeights[i];
 
 				result[dungeonName] = weight;
