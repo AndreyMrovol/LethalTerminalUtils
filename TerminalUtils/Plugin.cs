@@ -3,8 +3,6 @@ using BepInEx.Logging;
 using HarmonyLib;
 using TerminalUtils.Compatibility;
 
-// TODO: https://discord.com/channels/1168655651455639582/1387434268577370324/1470399921952788623
-
 namespace TerminalUtils
 {
 	[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
