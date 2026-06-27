@@ -16,10 +16,11 @@ namespace TerminalUtils
 
 		internal static LethalLevelLoaderCompatibility LLLCompatibility = new(LethalLevelLoader.Plugin.ModGUID);
 		internal static DawnLibCompatibility DawnCompatibility = new(Dawn.DawnLib.PLUGIN_GUID);
-		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 
 		///																		    just change your fucking properties in .csproj	VVV 	debugging this took me 2 hours
 		internal static LethalMoonUnlocksCompatibility LMUCompatibility = new(LethalMoonUnlocks.PluginMetadata.PLUGIN_GUID);
+		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
+		internal static LategameUpgradesCompatibility LGUCompat = new(MoreShipUpgrades.PluginInfo.PLUGIN_GUID);
 
 		private void Awake()
 		{
