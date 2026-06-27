@@ -8,7 +8,7 @@ repository = "https://thunderstore.io"
 namespace = "mrov"
 name = "TerminalUtils"
 description = "A terminal utility for Lethal Company, providing dynamic preview options, command registration and more."
-websiteUrl = "https://github.com/AndreyMrovol/TerminalUtils"
+websiteUrl = "https://github.com/AndreyMrovol/LethalTerminalUtils"
 containsNsfwContent = false
 
 [package.dependencies]
