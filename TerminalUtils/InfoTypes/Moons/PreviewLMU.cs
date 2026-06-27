@@ -11,9 +11,10 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override string Value(SelectableLevel inputValue)
 		{
-			return Plugin.LMUCompatibility.MoonUnlockables.TryGetValue(inputValue, out LMUnlockable unlockable)
-				? unlockable.BuildTagString()
-				: null;
+			object unlockable = Plugin.LMUCompatibility.MoonUnlockables.TryGetValue(inputValue, out unlockable) ? unlockable : null;
+			LMUnlockable lmu = unlockable as LMUnlockable;
+
+			return lmu?.BuildTagString();
 		}
 	}
 }

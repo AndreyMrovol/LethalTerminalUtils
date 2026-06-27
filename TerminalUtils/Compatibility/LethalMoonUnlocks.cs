@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using LethalMoonUnlocks;
 
 namespace TerminalUtils.Compatibility
@@ -9,7 +8,7 @@ namespace TerminalUtils.Compatibility
 		public LethalMoonUnlocksCompatibility(string guid, string version = null)
 			: base(guid, version) { }
 
-		public Dictionary<SelectableLevel, LMUnlockable> MoonUnlockables { get; private set; } = [];
+		public Dictionary<SelectableLevel, object> MoonUnlockables { get; private set; } = [];
 
 		public override void Init()
 		{
@@ -30,7 +29,7 @@ namespace TerminalUtils.Compatibility
 
 			List<LMUnlockable> unlockables = LethalMoonUnlocks.UnlockManager.Instance.Unlocks;
 
-			Dictionary<SelectableLevel, LMUnlockable> unlockablesDict = [];
+			Dictionary<SelectableLevel, object> unlockablesDict = [];
 
 			foreach (var unlockable in unlockables)
 			{
