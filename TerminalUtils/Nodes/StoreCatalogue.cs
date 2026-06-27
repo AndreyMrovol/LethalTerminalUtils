@@ -88,7 +88,7 @@ namespace TerminalUtils.Nodes
 						if (item.Discount != 0)
 						{
 							string discountPercent = item.Discount != 0 ? $"  (-{item.PercentOff}%)" : "";
-							priceWithDiscount += discountPercent;
+							priceWithDiscount = $"${item.Price * (1 - item.DiscountPercentage)}{discountPercent}";
 						}
 					}
 
