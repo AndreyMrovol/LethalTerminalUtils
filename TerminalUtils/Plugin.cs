@@ -18,6 +18,7 @@ namespace TerminalUtils
 
 		internal static LethalLevelLoaderCompatibility LLLCompatibility = new(LethalLevelLoader.Plugin.ModGUID);
 		internal static DawnLibCompatibility DawnCompatibility = new(Dawn.DawnLib.PLUGIN_GUID);
+		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 
 		private void Awake()
 		{

@@ -65,6 +65,11 @@ namespace TerminalUtils
 			PreviewInfoTypes.Add("Weather", new PreviewWeather());
 			PreviewInfoTypes.Add("Difficulty", new PreviewDifficulty());
 
+			if (Plugin.LCCompatibility.IsModPresent)
+			{
+				PreviewInfoTypes.Add("Constellation", new PreviewConstellation());
+			}
+
 			SortInfoTypes.Add("None", new SortNone());
 			SortInfoTypes.Add("Name", new SortName());
 			SortInfoTypes.Add("Price", new SortPrice());

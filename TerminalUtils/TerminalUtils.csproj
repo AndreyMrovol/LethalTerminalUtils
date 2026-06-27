@@ -51,6 +51,11 @@
         <PackageReference Include="TeamXiaolan-DawnLib" Version="*-*" Publicize="true" PrivateAssets="all"/>
     </ItemGroup>
 
+    <ItemGroup>        
+        <PackageReference Include="darmuh-LethalConstellations" Version="*-*" Publicize="true" PrivateAssets="all"/>
+        
+    </ItemGroup>
+
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <Reference Include="MrovLib" Publicize="true">
             <HintPath>$(DebugLibraryDirectory)/MrovLib.dll</HintPath>
