@@ -53,6 +53,7 @@
 
     <ItemGroup>        
         <PackageReference Include="darmuh-LethalConstellations" Version="*-*" Publicize="true" PrivateAssets="all"/>
+        <PackageReference Include="explodingMods-LethalMoonUnlocks" Version="*-*" Publicize="true" PrivateAssets="all"/>
         
     </ItemGroup>
 

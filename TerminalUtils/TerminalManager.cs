@@ -70,6 +70,11 @@ namespace TerminalUtils
 				PreviewInfoTypes.Add("Constellation", new PreviewConstellation());
 			}
 
+			if (Plugin.LMUCompatibility.IsModPresent)
+			{
+				PreviewInfoTypes.Add("LMU", new PreviewLMU());
+			}
+
 			SortInfoTypes.Add("None", new SortNone());
 			SortInfoTypes.Add("Name", new SortName());
 			SortInfoTypes.Add("Price", new SortPrice());

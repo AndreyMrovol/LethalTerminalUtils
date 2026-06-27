@@ -20,6 +20,9 @@ namespace TerminalUtils
 		internal static DawnLibCompatibility DawnCompatibility = new(Dawn.DawnLib.PLUGIN_GUID);
 		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 
+		///																		    just change your fucking properties in .csproj	VVV 	debugging this took me 2 hours
+		internal static LethalMoonUnlocksCompatibility LMUCompatibility = new(LethalMoonUnlocks.PluginMetadata.PLUGIN_GUID);
+
 		private void Awake()
 		{
 			logger = Logger;
