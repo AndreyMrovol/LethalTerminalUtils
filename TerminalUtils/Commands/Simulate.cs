@@ -39,13 +39,13 @@ namespace TerminalUtils.Commands
 
 			foreach ((string dungeonName, int dungeonRarity) in flowsWithRarity)
 			{
-#pragma warning disable IDE0071 // Simplify interpolation
+#pragma warning disable IDE0004
 				table.AddRow(
 					dungeonName.PadRight(20),
 					dungeonRarity,
 					$"{((float)dungeonRarity / (float)totalRarityPool * 100).ToString("F2")}%".PadLeft(4)
 				);
-#pragma warning restore IDE0071 // Simplify interpolation
+#pragma warning restore IDE0004
 			}
 
 			table.AddRow("", "", "");
