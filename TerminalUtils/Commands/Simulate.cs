@@ -17,33 +17,40 @@ namespace TerminalUtils.Commands
 
 			Dictionary<string, int> flowsWithRarity = [];
 
+			Dictionary<string, int> DungeonFlowsFromContentLoader = [];
 			if (Plugin.DawnCompatibility.IsModPresent)
 			{
-				flowsWithRarity = DawnLibCompatibility.GetDungeonRarities(StartOfRound.Instance.currentLevel);
+				DungeonFlowsFromContentLoader = DawnLibCompatibility.GetDungeonRarities(StartOfRound.Instance.currentLevel);
 			}
 			else if (Plugin.LLLCompatibility.IsModPresent)
 			{
-				flowsWithRarity = LethalLevelLoaderCompatibility.GetDungeonRarities(StartOfRound.Instance.currentLevel);
+				DungeonFlowsFromContentLoader = LethalLevelLoaderCompatibility.GetDungeonRarities(StartOfRound.Instance.currentLevel);
 			}
 
 			var table = new ConsoleTables.ConsoleTable("Interior", "Weight", "Chance");
 			table.AddRow("", "", "");
 
-			flowsWithRarity = flowsWithRarity.OrderBy(o => -o.Value).ToDictionary(k => k.Key, v => v.Value);
+			flowsWithRarity = DungeonFlowsFromContentLoader.OrderBy(o => -o.Value).ToDictionary(k => k.Key, v => v.Value);
 			int totalRarityPool = flowsWithRarity.Values.Sum();
+
+			Plugin.debugLogger.LogDebug(
+				$"Total rarity pool for level {level.PlanetName}: {totalRarityPool}. Flows with rarity: {string.Join("; ", flowsWithRarity.Select(kv => $"{kv.Key} (rarity: {kv.Value})"))}"
+			);
 
 			foreach ((string dungeonName, int dungeonRarity) in flowsWithRarity)
 			{
-				table.AddRow(dungeonName.PadRight(20), dungeonRarity, $"{(dungeonRarity / totalRarityPool * 100).ToString("F2")}%".PadLeft(4));
+#pragma warning disable IDE0071 // Simplify interpolation
+				table.AddRow(
+					dungeonName.PadRight(20),
+					dungeonRarity,
+					$"{((float)dungeonRarity / (float)totalRarityPool * 100).ToString("F2")}%".PadLeft(4)
+				);
+#pragma warning restore IDE0071 // Simplify interpolation
 			}
 
 			table.AddRow("", "", "");
 			table.AddRow("", "", "");
 			table.AddRow("", totalRarityPool.ToString().PadRight(6), "100%".ToString().PadLeft(4));
-
-			Plugin.debugLogger.LogDebug(
-				$"Flows with rarity for level {level.PlanetName}: {string.Join(", ", flowsWithRarity.Select(kv => $"{kv.Key} (rarity: {kv.Value})"))}"
-			);
 
 			return table.ToStringCustomDecoration(header: true);
 		}
