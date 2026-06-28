@@ -24,7 +24,7 @@ namespace TerminalUtils.Nodes
 			);
 
 			var outputString = new StringBuilder();
-			var table = new ConsoleTables.ConsoleTable(TerminalManager.CurrentPreviewInfoType.Select(info => info.Name).ToArray());
+			var table = new ConsoleTables.ConsoleTable(TerminalManager.CurrentPreviewInfoType.Select(info => "").ToArray());
 
 			int itemCount = 1;
 
