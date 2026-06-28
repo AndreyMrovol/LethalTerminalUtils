@@ -24,6 +24,18 @@ namespace TerminalUtils.Commands
 			args.ToList()
 				.ForEach(arg =>
 				{
+					infoTypes
+						.Keys.Select(key => key.ToLowerInvariant())
+						.ToList()
+						.ForEach(key =>
+						{
+							if (key.ToLowerInvariant().StartsWith(arg.ToLowerInvariant()))
+							{
+								Plugin.logger.LogDebug($"Preview type '{arg}' matched '{key}'");
+								arg = key;
+							}
+						});
+
 					if (infoTypes.ContainsKey(arg))
 					{
 						previewTypeNames.Add(arg);
