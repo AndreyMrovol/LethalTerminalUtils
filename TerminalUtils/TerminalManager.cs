@@ -98,7 +98,7 @@ namespace TerminalUtils
 
 		public static List<BuyableThing> GetCurrentStoreItems()
 		{
-			List<BuyableThing> currentlySelectedItems = TerminalManager.CurrentStoreSortInfoType.Sort(ContentManager.Buyables);
+			List<BuyableThing> currentlySelectedItems = TerminalManager.CurrentStoreSortInfoType.Sort(ContentManager.Buyables.ToList());
 
 			return currentlySelectedItems;
 		}
