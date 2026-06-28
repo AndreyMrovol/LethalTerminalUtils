@@ -94,5 +94,53 @@ namespace TerminalUtils.Compatibility
 
 			return result;
 		}
+
+		public string GetStoreItemNameOverride(Item item)
+		{
+			if (item == null)
+			{
+				return null;
+			}
+
+			DawnItemInfo info = item.GetDawnInfo();
+			DawnShopItemInfo shopInfo = info.ShopInfo;
+			if (shopInfo == null)
+			{
+				return item.itemName;
+			}
+
+			TerminalPurchaseResult result = shopInfo.DawnPurchaseInfo.PurchasePredicate.CanPurchase();
+			if (result is TerminalPurchaseResult.FailedPurchaseResult failedResult)
+			{
+				if (failedResult.OverrideName != null)
+				{
+					Plugin.debugLogger.LogCustom(
+						$"Overriding name of {info.Key} with {failedResult.OverrideName}",
+						BepInEx.Logging.LogLevel.Debug,
+						MrovLib.LoggingType.Debug
+					);
+				}
+				return failedResult.OverrideName ?? item.itemName;
+			}
+
+			return item.itemName;
+		}
+
+		public bool IsItemInStore(Item item)
+		{
+			if (item == null)
+			{
+				return false;
+			}
+
+			DawnItemInfo info = item.GetDawnInfo();
+			ITerminalPurchasePredicate shopInfo = info.ShopInfo.DawnPurchaseInfo.PurchasePredicate;
+			if (shopInfo == null)
+			{
+				return false;
+			}
+
+			return shopInfo.CanPurchase() is not TerminalPurchaseResult.HiddenPurchaseResult;
+		}
 	}
 }

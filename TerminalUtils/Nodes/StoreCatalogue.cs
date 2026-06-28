@@ -80,6 +80,7 @@ namespace TerminalUtils.Nodes
 				for (int i = 0; i < group.Value.Count; i++)
 				{
 					var thing = group.Value[i];
+					string name = thing.Name.PadRight(30);
 					string priceWithDiscount = $"${thing.Price}";
 
 					if (thing.Type == PurchaseType.Item)
@@ -88,11 +89,21 @@ namespace TerminalUtils.Nodes
 						if (item.Discount != 0)
 						{
 							string discountPercent = item.Discount != 0 ? $"  (-{item.PercentOff}%)" : "";
-							priceWithDiscount = $"${item.Price * (1 - item.DiscountPercentage)}{discountPercent}";
+							priceWithDiscount = $"${(int)(item.Price * (1 - item.DiscountPercentage))}{discountPercent}";
+						}
+
+						if (Plugin.DawnCompatibility.IsModPresent)
+						{
+							if (!Plugin.DawnCompatibility.IsItemInStore(item.Item))
+							{
+								continue;
+							}
+
+							name = Plugin.DawnCompatibility.GetStoreItemNameOverride(item.Item);
 						}
 					}
 
-					table.AddRow($"* {thing.Name.PadRight(30)}", $"{priceWithDiscount}");
+					table.AddRow($"* {name}", $"{priceWithDiscount}");
 
 					if (ConfigManager.DivideStore.Value != 0 && i != group.Value.Count - 1)
 					{
