@@ -1,3 +1,14 @@
+# 0.0.7
+
+- added compatibility with [LethalConstellations](https://thunderstore.io/c/lethal-company/p/darmuh/LethalConstellations/)
+  - `preview constellation` will display the moon's constellation in the terminal
+- added compatibility with [LethalMoonUnlocks](https://thunderstore.io/c/lethal-company/p/explodingMods/LethalMoonUnlocks/)
+  - `preview LMU` will display the LMU tags in the terminal using LMU settings (line width etc.)
+- fixed `Simulate` command not displaying the % chance correctly (thanks: `virustlnr`, `generic_gmd`!)
+- fixed `Store` node not displaying the discounted prices (thanks, `leubesgames`!)
+- fixed `Moon Catalogue` node not displaying hyphenated moon names (thanks, `homicidal_lemon`!)
+- fixed `Moon Catalogue` node displaying items disabled from the store (thanks, `homicidal_lemon`!)
+
 # 0.0.6
 
 - fixed an error with the store catalogue displaying items not in rotation
