@@ -21,6 +21,7 @@ namespace TerminalUtils
 		internal static LethalMoonUnlocksCompatibility LMUCompatibility = new(LethalMoonUnlocks.PluginMetadata.PLUGIN_GUID);
 		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 		internal static LategameUpgradesCompatibility LGUCompat = new(MoreShipUpgrades.PluginInfo.PLUGIN_GUID);
+		internal static StoreRotationConfigCompatibility SRCCompat = new("pacoito.StoreRotationConfig");
 
 		private void Awake()
 		{

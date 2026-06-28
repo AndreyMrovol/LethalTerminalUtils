@@ -55,6 +55,7 @@
         <PackageReference Include="darmuh-LethalConstellations" Version="*-*" Publicize="true" PrivateAssets="all"/>
         <PackageReference Include="explodingMods-LethalMoonUnlocks" Version="*-*" Publicize="true" PrivateAssets="all"/>
         <PackageReference Include="malco-Lategame_Upgrades" Version="*-*" PrivateAssets="all"/>
+        <PackageReference Include="pacoito-StoreRotationConfig" Version="*-*" PrivateAssets="all"/>
         
     </ItemGroup>
 
