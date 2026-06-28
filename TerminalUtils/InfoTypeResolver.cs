@@ -16,7 +16,7 @@ namespace TerminalUtils
 				return Defaults.defaultPreviewType.Split(";").Select(typeName => TerminalManager.PreviewInfoTypes[typeName]).ToList();
 			}
 
-			if (!inputString.Contains("Name".ToLowerInvariant()))
+			if (!inputString.ToLowerInvariant().Contains("Name".ToLowerInvariant()))
 			{
 				inputString = "Name;" + inputString;
 				Plugin.logger.LogDebug($"Preview type did not contain 'Name', defaulting to 'Name;{inputString}'");
