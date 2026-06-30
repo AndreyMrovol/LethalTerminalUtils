@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine.InputSystem;
@@ -63,13 +64,39 @@ namespace TerminalUtils.Patches
 				// Cache text currently shown in the terminal.
 				CurrentText = TerminalManager.Terminal.currentText;
 
+				Regex amountOfLines =
+					new(@"(?>\n{1,2}|)[A-Za-z0-9\ \'\:\.’“,”?!/%*$;\-\+\[\]\(\)]{1,50}", RegexOptions.Compiled | RegexOptions.Multiline);
+				// get the amount of groups in all matches, which is the amount of lines in the current terminal page
+
+				int amountOfLinesInCurrentPage = amountOfLines.Matches(CurrentText.Trim()).Count + 3; // why 3? because fuck you
+
+				int numLines;
+				if (ConfigManager.UseLegacyScrollBehavior.Value)
+				{
+					numLines = CurrentText.Count(c => c.Equals('\n')) + 1;
+				}
+				else
+				{
+					numLines = amountOfLinesInCurrentPage;
+				}
+
 				// Calculate relative scroll amount using the number of lines in the current terminal page.
-				int numLines = CurrentText.Count(c => c.Equals('\n')) + 1;
-				scrollAmount = ConfigManager.LinesToScroll.Value / (float)numLines;
+				int numLinesToScroll = ConfigManager.LinesToScroll.Value;
+
+				Plugin.debugLogger.LogWarning(
+					$"ScrollMouse_performed: text has changed; textLength = {numLines}; amountOfLinesInCurrentPage = {amountOfLinesInCurrentPage}"
+				);
+				float scrollPercentage = (float)numLinesToScroll / amountOfLinesInCurrentPage;
+
+				scrollAmount = scrollPercentage;
 			}
 
 			// Increment terminal scrollbar value by the relative scroll amount, in the direction given by the mouse wheel input.
 			scrollbar.value += scrollDirection * scrollAmount;
+
+			Plugin.debugLogger.LogMessage(
+				$"ScrollMouse_performed: scrollbar.value = {scrollbar.value}, scrollDirection = {scrollDirection}, scrollAmount = {scrollAmount}"
+			);
 		}
 
 		/// <summary>
