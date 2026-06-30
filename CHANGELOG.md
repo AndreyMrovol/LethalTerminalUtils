@@ -1,3 +1,10 @@
+# 0.0.8
+
+- added a new calculation method for the terminal scrollbar (thanks, `magicwesley`!)
+  - this should fix issues with the terminal scrolling too fast on longer text nodes
+  - the old behavior can be restored in the config
+- added a toggle for hiding locked moons in the moon catalogue (thanks, `unluckyjori`!)
+
 # 0.0.7
 
 - added compatibility with [LethalConstellations](https://thunderstore.io/c/lethal-company/p/darmuh/LethalConstellations/)
