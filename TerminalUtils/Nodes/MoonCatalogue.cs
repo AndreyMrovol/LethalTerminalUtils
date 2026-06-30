@@ -38,6 +38,11 @@ namespace TerminalUtils.Nodes
 					continue;
 				}
 
+				if (LevelHelper.IsLocked(level) && !ConfigManager.DisplayLockedMoons.Value)
+				{
+					continue;
+				}
+
 				if (MrovLib.Defaults.VanillaHiddenMoons.Contains(StringResolver.GetNumberlessName(level)))
 				{
 					continue;

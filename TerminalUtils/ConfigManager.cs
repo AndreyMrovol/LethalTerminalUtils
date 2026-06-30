@@ -24,6 +24,8 @@ namespace TerminalUtils
 		public static ConfigEntry<string> FilterInfoType { get; private set; }
 		public static ConfigEntry<string> SortInfoType { get; private set; }
 
+		public static ConfigEntry<bool> DisplayLockedMoons { get; private set; }
+
 		public static ConfigEntry<string> StoreSortInfoType { get; private set; }
 
 		public static ConfigEntry<int> DivideStore { get; private set; }
@@ -66,6 +68,13 @@ namespace TerminalUtils
 				"Store Sort Info Type",
 				Defaults.defaultStoreSortType,
 				"Set the default store sort info type. Must be the name of an existing store sort info type."
+			);
+
+			DisplayLockedMoons = configFile.Bind(
+				"Moons",
+				"Display Locked Moons",
+				true,
+				"Whether to display locked moons in the moon catalogue."
 			);
 
 			DivideStore = configFile.Bind(
