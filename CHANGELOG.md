@@ -1,3 +1,7 @@
+# 0.0.9
+
+- added `Difficulty` sorting type to the moon catalogue (thanks, `brksonance`!)
+
 # 0.0.8
 
 - added a new calculation method for the terminal scrollbar (thanks, `magicwesley`!)
