@@ -49,6 +49,9 @@
 
         <PackageReference Include="IAmBatby-LethalLevelLoader" Version="*-*" Publicize="true" PrivateAssets="all"/>
         <PackageReference Include="TeamXiaolan-DawnLib" Version="*-*" Publicize="true" PrivateAssets="all"/>
+
+
+        <PackageReference Include="Evaisa-LethalLib" Version="*-*" />
     </ItemGroup>
 
     <ItemGroup>        
@@ -56,7 +59,8 @@
         <PackageReference Include="explodingMods-LethalMoonUnlocks" Version="*-*" Publicize="true" PrivateAssets="all"/>
         <PackageReference Include="malco-Lategame_Upgrades" Version="*-*" PrivateAssets="all"/>
         <PackageReference Include="pacoito-StoreRotationConfig" Version="*-*" PrivateAssets="all"/>
-        <PackageReference Include="Evaisa-LethalLib" Version="*-*" />
+
+        
         
     </ItemGroup>
 
