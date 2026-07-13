@@ -78,6 +78,7 @@ namespace TerminalUtils
 			SortInfoTypes.Add("None", new SortNone());
 			SortInfoTypes.Add("Name", new SortName());
 			SortInfoTypes.Add("Price", new SortPrice());
+			SortInfoTypes.Add("Difficulty", new SortDifficulty());
 
 			FilterInfoTypes.Add("None", new FilterNone());
 			FilterInfoTypes.Add("Price", new FilterPrice());
