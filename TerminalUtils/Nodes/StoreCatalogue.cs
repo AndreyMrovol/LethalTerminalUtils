@@ -88,8 +88,8 @@ namespace TerminalUtils.Nodes
 						BuyableItem item = (BuyableItem)thing;
 						if (item.Discount != 0)
 						{
-							string discountPercent = item.Discount != 0 ? $"  (-{item.PercentOff}%)" : "";
-							priceWithDiscount = $"${(int)(item.Price * (1 - item.DiscountPercentage))}{discountPercent}";
+							string discountPercent = item.Discount != 0 ? $"  (-{item.Discount}%)" : "";
+							priceWithDiscount = $"${(int)(item.Price * item.DiscountPercentage)}{discountPercent}";
 						}
 
 						if (Plugin.DawnCompatibility.IsModPresent)
