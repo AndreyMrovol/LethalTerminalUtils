@@ -80,6 +80,11 @@ namespace TerminalUtils
 			SortInfoTypes.Add("Price", new SortPrice());
 			SortInfoTypes.Add("Difficulty", new SortDifficulty());
 
+			if (Plugin.LunarConfigCompat.IsModPresent)
+			{
+				SortInfoTypes.Add("Lunar", new SortLunar());
+			}
+
 			FilterInfoTypes.Add("None", new FilterNone());
 			FilterInfoTypes.Add("Price", new FilterPrice());
 			FilterInfoTypes.Add("Weather", new FilterWeather());
