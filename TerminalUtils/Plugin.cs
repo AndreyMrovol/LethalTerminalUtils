@@ -21,6 +21,7 @@ namespace TerminalUtils
 		internal static LategameUpgradesCompatibility LGUCompat = new(MoreShipUpgrades.PluginInfo.PLUGIN_GUID);
 		internal static StoreRotationConfigCompatibility SRCCompat = new("pacoito.StoreRotationConfig");
 		internal static LethalLibCompatibility LLCompat = new("Evaisa.LethalLib");
+		internal static LunarConfigCompatibility LunarConfigCompat = new("Crafty.LunarConfig");
 
 		private void Awake()
 		{
