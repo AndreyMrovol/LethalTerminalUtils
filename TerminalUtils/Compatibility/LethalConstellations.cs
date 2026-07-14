@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using LethalConstellations.PluginCore;
 
 namespace TerminalUtils.Compatibility
 {
@@ -35,7 +34,7 @@ namespace TerminalUtils.Compatibility
 
 			Dictionary<SelectableLevel, string> constellationsDict = [];
 
-			List<ClassMapper> constellations = Collections.ConstellationStuff;
+			List<LethalConstellations.PluginCore.ClassMapper> constellations = LethalConstellations.PluginCore.Collections.ConstellationStuff;
 
 			foreach (var constellation in constellations)
 			{
