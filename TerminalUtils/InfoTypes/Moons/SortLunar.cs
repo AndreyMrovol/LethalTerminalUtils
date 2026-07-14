@@ -10,7 +10,8 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override List<SelectableLevel> Sort(List<SelectableLevel> inputList)
 		{
-			inputList.Sort((a, b) => Plugin.LunarConfigCompat.GetMoonIndex(a).CompareTo(Plugin.LunarConfigCompat.GetMoonIndex(b)));
+			// highest to lowest
+			inputList.Sort((a, b) => Plugin.LunarConfigCompat.GetMoonIndex(b).CompareTo(Plugin.LunarConfigCompat.GetMoonIndex(a)));
 			return inputList;
 		}
 	}
