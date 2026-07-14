@@ -89,7 +89,9 @@ namespace TerminalUtils.Nodes
 						if (item.Discount != 0)
 						{
 							string discountPercent = item.Discount != 0 ? $"  (-{item.Discount}%)" : "";
-							priceWithDiscount = $"${(int)(item.Price * item.DiscountPercentage)}{discountPercent}";
+							decimal discounted = Convert.ToDecimal(item.Price) * Convert.ToDecimal(item.DiscountPercentage);
+							int finalPrice = (int)Math.Floor(discounted);
+							priceWithDiscount = $"${finalPrice}{discountPercent}";
 						}
 
 						if (Plugin.DawnCompatibility.IsModPresent)
