@@ -1,3 +1,11 @@
+# 0.0.10
+
+- added `Lunar` sorting type to use LunarConfig's custom indexing (thanks, `r00kieg`!)
+- added a check for Company levels to `Simulate` command
+- added a check for Company levels to `Scan` command (instead of just Gordion)
+- fixed `Difficulty` sorting type not working and sorting incorrectly (thanks, `brobro1616`!)
+- fixed store displaying wrong discounts (thanks, `leubesgames`!)
+
 # 0.0.9
 
 - added `Difficulty` sorting type to the moon catalogue (thanks, `brksonance`!)
