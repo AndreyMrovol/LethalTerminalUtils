@@ -11,6 +11,14 @@ namespace TerminalUtils.Compatibility
 
 		public Dictionary<SelectableLevel, int> newIndex = [];
 
+		public override void Init()
+		{
+			MrovLib.EventManager.ContentManagerReady.AddListener(() =>
+			{
+				GetMoonIndexes();
+			});
+		}
+
 		private void GetMoonIndexes()
 		{
 			if (LunarConfig.Objects.Config.LunarCentral.enabledMoonSettings.Contains("Catalogue Index"))
