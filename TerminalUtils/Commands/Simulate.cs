@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DunGen.Graph;
+using MrovLib;
 using TerminalUtils.Compatibility;
 using TerminalUtils.Definitions;
 
@@ -14,6 +15,11 @@ namespace TerminalUtils.Commands
 		public override string Execute(string[] args)
 		{
 			SelectableLevel level = MrovLib.StringResolver.ResolveStringToLevels(args[0]).FirstOrDefault();
+
+			if (LevelHelper.CompanyMoons.Contains(level) || !level.spawnEnemiesAndScrap)
+			{
+				return $"{level.PlanetName} cannot generate interior!";
+			}
 
 			Dictionary<string, int> flowsWithRarity = [];
 
