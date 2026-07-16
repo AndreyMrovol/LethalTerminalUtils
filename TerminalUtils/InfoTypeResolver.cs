@@ -40,7 +40,17 @@ namespace TerminalUtils
 				return TerminalManager.FilterInfoTypes["None"];
 			}
 
-			return TerminalManager.FilterInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == inputString.ToLowerInvariant()).Value;
+			FilterInfoType<SelectableLevel> filterInfoType = TerminalManager
+				.FilterInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == inputString.ToLowerInvariant())
+				.Value;
+
+			if (filterInfoType == null)
+			{
+				Plugin.logger.LogWarning($"FilterInfoType '{inputString}' not found, defaulting to 'None'");
+				return TerminalManager.FilterInfoTypes["None"];
+			}
+
+			return filterInfoType;
 		}
 
 		public static SortInfoType<SelectableLevel> GetSortInfoType(string inputString)
@@ -50,7 +60,17 @@ namespace TerminalUtils
 				return TerminalManager.SortInfoTypes["None"];
 			}
 
-			return TerminalManager.SortInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == inputString.ToLowerInvariant()).Value;
+			SortInfoType<SelectableLevel> sortInfoType = TerminalManager
+				.SortInfoTypes.FirstOrDefault(info => info.Key.ToLowerInvariant() == inputString.ToLowerInvariant())
+				.Value;
+
+			if (sortInfoType == null)
+			{
+				Plugin.logger.LogWarning($"SortInfoType '{inputString}' not found, defaulting to 'None'");
+				return TerminalManager.SortInfoTypes["None"];
+			}
+
+			return sortInfoType;
 		}
 
 		public static SortInfoType<BuyableThing> GetStoreSortInfoType(string inputString)
