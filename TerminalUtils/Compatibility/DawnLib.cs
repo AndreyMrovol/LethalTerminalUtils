@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using Dawn;
 using HarmonyLib;
 
@@ -11,6 +12,7 @@ namespace TerminalUtils.Compatibility
 		public DawnLibCompatibility(string guid, string version = null)
 			: base(guid, version) { }
 
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public override void Init()
 		{
 			if (!this.IsModPresent)
@@ -25,6 +27,13 @@ namespace TerminalUtils.Compatibility
 			);
 		}
 
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+		public object GetLevelDawnInfo(SelectableLevel level)
+		{
+			return level.GetDawnInfo();
+		}
+
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public (bool locked, bool hidden) GetLevelStatus(SelectableLevel level)
 		{
 			if (!this.IsModPresent)
@@ -59,6 +68,7 @@ namespace TerminalUtils.Compatibility
 			return matcher.InstructionEnumeration();
 		}
 
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public static Dictionary<string, int> GetDungeonRarities(SelectableLevel level)
 		{
 			Dictionary<string, int> result = [];
@@ -95,6 +105,7 @@ namespace TerminalUtils.Compatibility
 			return result;
 		}
 
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public string GetStoreItemNameOverride(Item item)
 		{
 			if (item == null)
@@ -126,6 +137,7 @@ namespace TerminalUtils.Compatibility
 			return item.itemName;
 		}
 
+		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public bool IsItemInStore(Item item)
 		{
 			if (item == null)
