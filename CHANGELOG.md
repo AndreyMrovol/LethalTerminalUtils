@@ -1,3 +1,8 @@
+# 0.0.11
+
+- fixed some issues when LunarConfig was not present
+- fixed an error caused by disabled sorting types selected in the config
+
 # 0.0.10
 
 - added `Lunar` sorting type to use LunarConfig's custom indexing (thanks, `r00kieg`!)
