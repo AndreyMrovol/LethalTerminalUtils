@@ -1,3 +1,8 @@
+# 0.0.12
+
+- fixed an issue with `Lunar` sorting type (thanks, `systmantha`!)
+- fixed an issue with `Simulate` command not displaying the correct entries (thanks: `virustlnr`, `lunxara`!)
+
 # 0.0.11
 
 - fixed some issues when LunarConfig was not present
