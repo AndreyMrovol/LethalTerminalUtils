@@ -11,16 +11,19 @@ namespace TerminalUtils.Compatibility
 		public LunarConfigCompatibility(string guid, string version = null)
 			: base(guid, version) { }
 
-		public static Dictionary<SelectableLevel, int> newIndex = [];
+		private static Dictionary<object, int> rawIndex = [];
+		private static Dictionary<SelectableLevel, int> newIndex = [];
 
 		public override void Init()
 		{
-			Plugin.logger.LogInfo("Initializing LunarConfig compatibility...");
+			Plugin.logger.LogDebug("Initializing LunarConfig compatibility...");
 
 			Plugin.harmony.Patch(
-				AccessTools.Constructor(typeof(LunarConfig.Objects.Config.LunarConfigCustomMoonOrder), [typeof(Dictionary<DawnMoonInfo, int>)]),
+				AccessTools.Method(typeof(LunarConfig.Objects.Config.LunarCentral), nameof(LunarConfig.Objects.Config.LunarCentral.InitMoons)),
 				transpiler: new HarmonyMethod(AccessTools.Method(typeof(LunarConfigCompatibility), nameof(LunarConfig_GetOrderingAlgorithm)))
 			);
+
+			MrovLib.EventManager.ContentManagerReady.AddListener(ProcessNewOrder);
 		}
 
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -35,36 +38,79 @@ namespace TerminalUtils.Compatibility
 
 			var passMethod = AccessTools.Method(typeof(LunarConfigCompatibility), nameof(PassNewCatalogueIndex));
 
-			// Find ctor call and insert a call right before it:
-			// stack: ... dict -> PassNewCatalogueIndex(dict) -> dict -> new LunarConfigCustomMoonOrder(dict)
 			matcher.MatchForward(false, new CodeMatch(ci => ci.opcode == OpCodes.Newobj && Equals(ci.operand, lunarCustomOrderCtor)));
 
 			if (matcher.IsValid)
 			{
+				Plugin.debugLogger.LogDebug("Found the target instruction for LunarConfig_GetOrderingAlgorithm transpiler.");
 				matcher.Insert(new CodeInstruction(OpCodes.Call, passMethod));
+			}
+			else
+			{
+				Plugin.debugLogger.LogDebug("Failed to find the target instruction for LunarConfig_GetOrderingAlgorithm transpiler.");
 			}
 
 			return matcher.InstructionEnumeration();
 		}
 
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		private static void PassNewCatalogueIndex(Dictionary<object, int> newCatalogueIndex)
+		private static Dictionary<DawnMoonInfo, int> PassNewCatalogueIndex(Dictionary<DawnMoonInfo, int> newCatalogueIndex)
 		{
-			newIndex.Clear();
-
-			MrovLib.LevelHelper.Levels.ForEach(moon =>
+			if (newCatalogueIndex == null)
 			{
-				Dawn.DawnMoonInfo moonInfo = moon.GetDawnInfo();
+				return null;
+			}
 
-				int index = newCatalogueIndex.ContainsKey(moonInfo) ? newCatalogueIndex[moonInfo] : 0;
-				newIndex.Add(moon, index);
-			});
+			newIndex.Clear();
+			rawIndex.Clear();
+
+			foreach (var kvp in newCatalogueIndex)
+			{
+				rawIndex[kvp.Key] = kvp.Value;
+			}
+
+			return newCatalogueIndex;
+		}
+
+		private static void ProcessNewOrder()
+		{
+			if (rawIndex == null || rawIndex.Count == 0)
+			{
+				return;
+			}
+
+			var levels = MrovLib.LevelHelper.Levels;
+
+			foreach (var moon in levels)
+			{
+				if (moon == null)
+				{
+					continue;
+				}
+
+				DawnMoonInfo moonInfo;
+				try
+				{
+					moonInfo = moon.GetDawnInfo();
+				}
+				catch
+				{
+					continue;
+				}
+
+				if (moonInfo == null)
+				{
+					continue;
+				}
+
+				newIndex[moon] = rawIndex.TryGetValue(moonInfo, out var value) ? value : 0;
+			}
 		}
 
 		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public int GetMoonIndex(SelectableLevel moon)
 		{
-			return newIndex.ContainsKey(moon) ? newIndex[moon] : 0;
+			return newIndex != null && moon != null && newIndex.TryGetValue(moon, out var value) ? value : 0;
 		}
 	}
 }
