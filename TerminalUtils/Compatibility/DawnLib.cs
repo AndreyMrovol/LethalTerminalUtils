@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using Dawn;
+using Dawn.Utils;
 using HarmonyLib;
 
 namespace TerminalUtils.Compatibility
@@ -80,11 +82,7 @@ namespace TerminalUtils.Compatibility
 
 			foreach (DawnDungeonInfo dungeonInfo in LethalContent.Dungeons.Values)
 			{
-				SpawnWeightContext ctx = new SpawnWeightContext(
-					relevantMoonInfo,
-					null,
-					Dawn.Internal.TimeOfDayRefs.GetCurrentWeatherEffect(relevantMoonInfo.Level)?.GetDawnInfo()
-				).WithExtra(SpawnWeightExtraKeys.RoutingPriceKey, relevantMoonInfo.DawnPurchaseInfo.Cost.Provide());
+				SpawnWeightContext ctx = new(moon: relevantMoonInfo, dungeon: null, weather: null);
 
 				int rarity = dungeonInfo.Weights.GetFor(ctx) ?? 0;
 				if (rarity > 0)
@@ -94,9 +92,18 @@ namespace TerminalUtils.Compatibility
 				}
 			}
 
+			Plugin.debugLogger.LogDebug(
+				$"Found {possibleDungeons.Count} possible dungeons for level {level.PlanetName}: {string.Join(", ", possibleDungeons.Select(d => d.Key))}"
+			);
+
+			// sort by rarity
 			for (int i = 0; i < possibleDungeons.Count; i++)
 			{
-				string dungeonName = possibleDungeons[i].DungeonFlow.name;
+				string dungeonName = possibleDungeons[i]
+					.Key.Key.RemoveLeadingNumbers()
+					.ToCapitalized()
+					.ReplaceNumbersWithWords()
+					.Replace(" ", "_");
 				int weight = (int)possibleDungeonWeights[i];
 
 				result[dungeonName] = weight;
