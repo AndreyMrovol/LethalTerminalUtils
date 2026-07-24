@@ -153,7 +153,7 @@ namespace TerminalUtils.Compatibility
 			}
 
 			DawnItemInfo info = item.GetDawnInfo();
-			ITerminalPurchasePredicate shopInfo = info.ShopInfo.DawnPurchaseInfo.PurchasePredicate;
+			ITerminalPurchasePredicate shopInfo = info?.ShopInfo?.DawnPurchaseInfo?.PurchasePredicate;
 			if (shopInfo == null)
 			{
 				return false;
