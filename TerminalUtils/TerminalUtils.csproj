@@ -84,10 +84,6 @@
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
     </PropertyGroup>
 
-    <Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
-        <!-- <Exec Command="dotnet netcode-patch -uv 2022.3.62 -nv 1.12.0 -tv 1.0.0 &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')"/> -->
-    </Target>
-
     <!-- MinVer Set Mod Version from Git -->
     <Target Name="SetPluginVersion" BeforeTargets="AddGeneratedFile" DependsOnTargets="MinVer">
         <PropertyGroup>
@@ -111,7 +107,7 @@
         <Exec Command="dotnet tcli publish --config-path $(ProjectDir)../assets/thunderstore.toml --file $(ProjectDir)dist/*-$(MinVerVersion).zip" />
     </Target>
 
-    <Target Name="CopyToDebugProfile" AfterTargets="NetcodePatch" Condition="'$(Configuration)' == 'Debug'">
+    <Target Name="CopyToDebugProfile" AfterTargets="PostBuildEvent;NetcodePatch" Condition="'$(Configuration)' == 'Debug'">
         <Message Importance="high" Text="" />
 
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(DebugLibraryDirectory)" Condition="Exists('$(DebugLibraryDirectory)')" />
