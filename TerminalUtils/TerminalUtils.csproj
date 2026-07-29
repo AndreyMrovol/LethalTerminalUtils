@@ -49,6 +49,7 @@
 
         <PackageReference Include="IAmBatby-LethalLevelLoader" Version="*-*" Publicize="true" PrivateAssets="all"/>
         <PackageReference Include="TeamXiaolan-DawnLib" Version="*-*" Publicize="true" PrivateAssets="all"/>
+        <PackageReference Include="mrov-WeatherRegistry" Version="*-*" Publicize="true" PrivateAssets="all"/>
 
 
         <PackageReference Include="Evaisa-LethalLib" Version="*-*" />
@@ -92,7 +93,7 @@
         </PropertyGroup>
     </Target>
 
-    <Target Name="PackThunderstore" DependsOnTargets="NetcodePatch;SetPluginVersion" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
+    <Target Name="PackThunderstore" DependsOnTargets="SetPluginVersion" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
         
         <MakeDir Directories="$(ProjectDir)../assets/bundles" Condition="!Exists('$(ProjectDir)../assets/bundles')" />
         

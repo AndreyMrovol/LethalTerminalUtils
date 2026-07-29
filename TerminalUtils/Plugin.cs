@@ -16,6 +16,8 @@ namespace TerminalUtils
 
 		internal static LethalLevelLoaderCompatibility LLLCompatibility = new(LethalLevelLoader.Plugin.ModGUID);
 		internal static DawnLibCompatibility DawnCompatibility = new(Dawn.DawnLib.PLUGIN_GUID);
+		internal static WeatherRegistryCompatibility WeatherRegistryCompatibility = new(WeatherRegistry.PluginInfo.PLUGIN_GUID);
+
 		internal static LethalMoonUnlocksCompatibility LMUCompatibility = new(LethalMoonUnlocks.PluginMetadata.PLUGIN_GUID);
 		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 		internal static LategameUpgradesCompatibility LGUCompat = new(MoreShipUpgrades.PluginInfo.PLUGIN_GUID);
