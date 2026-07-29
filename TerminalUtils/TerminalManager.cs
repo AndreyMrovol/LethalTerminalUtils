@@ -16,6 +16,7 @@ namespace TerminalUtils
 
 		public static TerminalNode MoonsPage { get; private set; }
 		public static TerminalNode StorePage { get; private set; }
+		public static TerminalNode ScanPage { get; private set; }
 
 		public static Dictionary<string, PreviewInfoType<SelectableLevel>> PreviewInfoTypes = [];
 		public static Dictionary<string, FilterInfoType<SelectableLevel>> FilterInfoTypes = [];
@@ -37,6 +38,7 @@ namespace TerminalUtils
 		{
 			MoonsPage = ContentManager.MoonsKeyword.specialKeywordResult;
 			StorePage = ContentManager.Nodes.FirstOrDefault(node => node.name == "0_StoreHub");
+			ScanPage = ContentManager.Nodes.FirstOrDefault(node => node.name == "ScanInfo");
 
 			RegisterLocalInfoTypes();
 
@@ -50,6 +52,7 @@ namespace TerminalUtils
 			{
 				{ MoonsPage, new MoonCatalogue() },
 				{ StorePage, new StoreCatalogue() },
+				{ ScanPage, new Scan() }
 			};
 		}
 

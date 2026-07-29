@@ -30,6 +30,9 @@ namespace TerminalUtils
 
 		public static ConfigEntry<int> DivideStore { get; private set; }
 
+		public static ConfigEntry<bool> DetailedScanPage { get; private set; }
+		public static ConfigEntry<bool> DisplayAccuratePrices { get; private set; }
+
 		private ConfigManager(ConfigFile config)
 		{
 			configFile = config;
@@ -83,6 +86,9 @@ namespace TerminalUtils
 				5,
 				"Set the number of items to divide the store into. 0 means no division."
 			);
+
+			DetailedScanPage = configFile.Bind("Scan", "Display Detailed Scan", true, "Enable detailed scan page");
+			DisplayAccuratePrices = configFile.Bind("Scan", "Display Accurate Prices", false, "Enable accurate prices on scan page");
 		}
 	}
 }
