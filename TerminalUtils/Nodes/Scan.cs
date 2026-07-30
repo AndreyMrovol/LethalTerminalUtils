@@ -32,6 +32,15 @@ namespace TerminalUtils.Nodes
 			}
 		}
 
+		public List<GrabbableObject> GetObjects()
+		{
+			return UnityEngine
+				.Object.FindObjectsOfType<GrabbableObject>()
+				.Where(item => item.itemProperties.isScrap && item.radarIcon != null && GrabbablePredicate(item))
+				.OrderBy(x => x.scrapValue)
+				.ToList();
+		}
+
 		public override string GetNodeText(TerminalNode node)
 		{
 			bool detailedScan = ConfigManager.DetailedScanPage.Value;
@@ -44,11 +53,7 @@ namespace TerminalUtils.Nodes
 			bool isShip = StartOfRound.Instance.inShipPhase;
 			bool isCompanyMoon = LevelHelper.CompanyMoons.Contains(StartOfRound.Instance.currentLevel);
 
-			List<GrabbableObject> objectsToScan = UnityEngine
-				.Object.FindObjectsOfType<GrabbableObject>()
-				.Where(item => item.itemProperties.isScrap && item.radarIcon != null && GrabbablePredicate(item))
-				.OrderBy(x => x.scrapValue)
-				.ToList();
+			List<GrabbableObject> objectsToScan = GetObjects();
 
 			int items = objectsToScan.Count;
 			int value = objectsToScan.Sum(x => x.scrapValue);
