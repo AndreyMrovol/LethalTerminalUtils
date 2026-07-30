@@ -1,3 +1,9 @@
+# 0.0.13
+
+- fixed an issue with `Store` command crashing (thanks: `jason.lce`, `unluckyjori`!)
+- added `Scan` command to display objects in the ship/on the moon
+- added explicit compatibility with [WeatherRegistry](https://thunderstore.io/c/lethal-company/p/mrov/WeatherRegistry/) to display weather name overrides correctly
+
 # 0.0.12
 
 - fixed an issue with `Lunar` sorting type (thanks, `systmantha`!)
