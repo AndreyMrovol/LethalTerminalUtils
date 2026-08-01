@@ -28,7 +28,7 @@ namespace TerminalUtils.Nodes
 			}
 			else
 			{
-				return !obj.isInShipRoom && !obj.isInElevator;
+				return !obj.isInShipRoom || !obj.isInElevator;
 			}
 		}
 
