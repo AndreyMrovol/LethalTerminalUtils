@@ -9,12 +9,14 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override string Value(SelectableLevel inputValue)
 		{
+			string weather = inputValue.currentWeather.ToString();
+
 			if (Plugin.WeatherRegistryCompatibility.IsModPresent)
 			{
-				return Plugin.WeatherRegistryCompatibility.GetWeather(inputValue);
+				weather = Plugin.WeatherRegistryCompatibility.GetWeather(inputValue);
 			}
 
-			return inputValue.currentWeather.ToString() == "None" ? "" : inputValue.currentWeather.ToString();
+			return weather == "None" ? "" : weather;
 		}
 	}
 }
