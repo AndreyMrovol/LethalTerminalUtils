@@ -1,3 +1,8 @@
+# 0.0.14
+
+- fixed an issue with weather displaying `None` as a value
+- fixed an issue with `Scan` not displaying scrap on ship
+
 # 0.0.13
 
 - fixed an issue with `Store` command crashing (thanks: `jason.lce`, `unluckyjori`!)
