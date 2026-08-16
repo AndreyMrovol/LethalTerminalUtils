@@ -1,3 +1,8 @@
+# 0.0.15
+
+- fixed an issue with shortened weather names being applied incorrectly (thanks, `dedicate.`!)
+- fixed an issue with `Price` sorting not ordering vanilla moons correctly (thanks, `hugeguts`!)
+
 # 0.0.14
 
 - fixed an issue with weather displaying `None` as a value
