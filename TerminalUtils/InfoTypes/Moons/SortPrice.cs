@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MrovLib;
 using TerminalUtils.Definitions;
 
@@ -11,10 +12,7 @@ namespace TerminalUtils.InfoTypes.Moons
 
 		public override List<SelectableLevel> Sort(List<SelectableLevel> inputList)
 		{
-			inputList.Sort(
-				(a, b) => ContentManager.RouteDictionary.GetRoute(a).Price.CompareTo(ContentManager.RouteDictionary.GetRoute(b).Price)
-			);
-			return inputList;
+			return inputList.OrderBy(level => LevelHelper.VanillaOrder).ThenBy(a => ContentManager.RouteDictionary.GetRoute(a).Price).ToList();
 		}
 	}
 }
