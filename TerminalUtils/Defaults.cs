@@ -4,7 +4,7 @@ namespace TerminalUtils
 	{
 		public static readonly int terminalWidth = 48;
 
-		internal static readonly int planetWeatherWidth = 18;
+		internal static readonly int planetWeatherWidth = 16;
 		internal static readonly int planetNameWidth = terminalWidth + 2 - planetWeatherWidth - 9;
 
 		internal static readonly int itemNameWidth = terminalWidth - 9 - 10;
