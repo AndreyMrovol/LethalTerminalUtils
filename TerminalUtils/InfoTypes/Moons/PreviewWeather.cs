@@ -5,18 +5,14 @@ namespace TerminalUtils.InfoTypes.Moons
 	public class PreviewWeather : PreviewInfoType<SelectableLevel>
 	{
 		public PreviewWeather()
-			: base("Weather") { }
+			: base("Weather")
+		{
+			this.MaxLength = Defaults.planetWeatherWidth;
+		}
 
 		public override string Value(SelectableLevel inputValue)
 		{
-			string weather = inputValue.currentWeather.ToString();
-
-			if (Plugin.WeatherRegistryCompatibility.IsModPresent)
-			{
-				weather = Plugin.WeatherRegistryCompatibility.GetWeather(inputValue);
-			}
-
-			return weather == "None" ? "" : weather;
+			return Utils.GetWeatherName.GetWeather(inputValue);
 		}
 	}
 }

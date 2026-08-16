@@ -9,5 +9,10 @@ namespace TerminalUtils.Compatibility
 		{
 			return WeatherRegistry.WeatherManager.GetCurrentWeatherName(level);
 		}
+
+		public string GetWeatherShort(LevelWeatherType weather)
+		{
+			return WeatherRegistry.WeatherManager.GetWeather(weather).NameShort;
+		}
 	}
 }
