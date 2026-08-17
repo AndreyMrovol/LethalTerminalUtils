@@ -28,15 +28,16 @@ namespace TerminalUtils.Nodes
 			}
 			else
 			{
-				return !obj.isInShipRoom || !obj.isInElevator;
+				return !obj.isInShipRoom && !obj.isInElevator;
 			}
 		}
 
 		public List<GrabbableObject> GetObjects()
 		{
-			return UnityEngine
-				.Object.FindObjectsOfType<GrabbableObject>()
-				.Where(item => item.itemProperties.isScrap && item.radarIcon != null && GrabbablePredicate(item))
+			List<GrabbableObject> allObjects = Object.FindObjectsOfType<GrabbableObject>().ToList();
+
+			return allObjects
+				.Where(item => item.itemProperties.isScrap && GrabbablePredicate(item) && !item.deactivated)
 				.OrderBy(x => x.scrapValue)
 				.ToList();
 		}

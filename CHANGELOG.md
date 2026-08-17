@@ -1,3 +1,7 @@
+# 0.0.16
+
+- fixed an issue with `Scan` command not displaying any scrap (thanks, `systmantha`!)
+
 # 0.0.15
 
 - fixed an issue with shortened weather names being applied incorrectly (thanks, `dedicate.`!)
