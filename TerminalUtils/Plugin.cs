@@ -21,7 +21,8 @@ namespace TerminalUtils
 		internal static LethalMoonUnlocksCompatibility LMUCompatibility = new(LethalMoonUnlocks.PluginMetadata.PLUGIN_GUID);
 		internal static LethalConstellationsCompatibility LCCompatibility = new(LethalConstellations.Plugin.PluginInfo.PLUGIN_GUID);
 		internal static LategameUpgradesCompatibility LGUCompat = new(MoreShipUpgrades.PluginInfo.PLUGIN_GUID);
-		internal static StoreRotationConfigCompatibility SRCCompat = new("pacoito.StoreRotationConfig");
+
+		// internal static StoreRotationConfigCompatibility SRCCompat = new("pacoito.StoreRotationConfig");
 		internal static LethalLibCompatibility LLCompat = new("Evaisa.LethalLib");
 		internal static LunarConfigCompatibility LunarConfigCompat = new("Crafty.LunarConfig");
 
