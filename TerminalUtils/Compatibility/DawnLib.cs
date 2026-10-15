@@ -1,11 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using Dawn;
-using Dawn.Utils;
 using HarmonyLib;
+
+// assuming that Dawn won't always be present,
+// this code has to avoid using Dawn types and casting to them
+// what a fucking mess
 
 namespace TerminalUtils.Compatibility
 {
@@ -14,7 +16,14 @@ namespace TerminalUtils.Compatibility
 		public DawnLibCompatibility(string guid, string version = null)
 			: base(guid, version) { }
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+		private static Type _lethalContentType;
+		private static Type _stringExtensionsType;
+		private static Type _spawnWeightContextType;
+
+		private static Type LethalContentType => _lethalContentType ??= AccessTools.TypeByName("Dawn.LethalContent");
+		private static Type StringExtensionsType => _stringExtensionsType ??= AccessTools.TypeByName("Dawn.Utils.StringExtensions");
+		private static Type SpawnWeightContextType => _spawnWeightContextType ??= AccessTools.TypeByName("Dawn.SpawnWeightContext");
+
 		public override void Init()
 		{
 			if (!this.IsModPresent)
@@ -29,13 +38,39 @@ namespace TerminalUtils.Compatibility
 			);
 		}
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-		public object GetLevelDawnInfo(SelectableLevel level)
+		private static object GetStatic(Type type, string member) =>
+			Traverse.Create(type).Property(member).GetValue() ?? Traverse.Create(type).Field(member).GetValue();
+
+		private static object Get(object target, string member) =>
+			target == null ? null : Traverse.Create(target).Property(member).GetValue() ?? Traverse.Create(target).Field(member).GetValue();
+
+		private static object CallStatic(Type type, string method, params object[] args) =>
+			Traverse.Create(type).Method(method, args).GetValue();
+
+		/// Finds the DawnXInfo (the Value of the KeyValuePair) in a LethalContent registry.
+		private static object FindInfo(string registryName, string valueMember, object expected)
 		{
-			return level.GetDawnInfo();
+			if (GetStatic(LethalContentType, registryName) is not IEnumerable registry)
+			{
+				return null;
+			}
+
+			foreach (object pair in registry)
+			{
+				object value = Get(pair, "Value");
+				if (ReferenceEquals(Get(value, valueMember), expected) || Equals(Get(value, valueMember), expected))
+				{
+					return value;
+				}
+			}
+
+			return null;
 		}
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+		public static object GetLevelDawnInfo(SelectableLevel level) => FindInfo("Moons", "Level", level);
+
+		public static object GetItemDawnInfo(Item item) => FindInfo("Items", "Item", item);
+
 		public (bool locked, bool hidden) GetLevelStatus(SelectableLevel level)
 		{
 			if (!this.IsModPresent)
@@ -43,12 +78,16 @@ namespace TerminalUtils.Compatibility
 				return (false, false);
 			}
 
-			return level.GetDawnInfo().DawnPurchaseInfo.PurchasePredicate.CanPurchase() switch
+			object moonInfo = GetLevelDawnInfo(level);
+			object predicate = Get(Get(moonInfo, "DawnPurchaseInfo"), "PurchasePredicate");
+			object result = Traverse.Create(predicate).Method("CanPurchase").GetValue();
+
+			return (result?.GetType().Name) switch
 			{
-				Dawn.TerminalPurchaseResult.HiddenPurchaseResult hiddenResult => (hiddenResult.IsFailure, true),
-				Dawn.TerminalPurchaseResult.FailedPurchaseResult => (true, false),
-				Dawn.TerminalPurchaseResult.SuccessPurchaseResult => (false, false),
-				_ => (false, false)
+				"HiddenPurchaseResult" => ((bool)Get(result, "IsFailure"), true),
+				"FailedPurchaseResult" => (true, false),
+				// SuccessPurchaseResult or unknown
+				_ => (false, false),
 			};
 		}
 
@@ -70,21 +109,30 @@ namespace TerminalUtils.Compatibility
 			return matcher.InstructionEnumeration();
 		}
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public static Dictionary<string, int> GetDungeonRarities(SelectableLevel level)
 		{
 			Dictionary<string, int> result = [];
 
-			DawnMoonInfo relevantMoonInfo = level.GetDawnInfo();
-
-			List<DawnDungeonInfo> possibleDungeons = [];
-			List<float> possibleDungeonWeights = [];
-
-			foreach (DawnDungeonInfo dungeonInfo in LethalContent.Dungeons.Values)
+			object relevantMoonInfo = GetLevelDawnInfo(level);
+			if (relevantMoonInfo == null)
 			{
-				SpawnWeightContext ctx = new(moon: relevantMoonInfo, dungeon: null, weather: null);
+				return result;
+			}
 
-				int rarity = dungeonInfo.Weights.GetFor(ctx) ?? 0;
+			var dungeons = (IEnumerable)Traverse.Create(GetStatic(LethalContentType, "Dungeons")).Property("Values").GetValue();
+
+			List<object> possibleDungeons = [];
+			List<int> possibleDungeonWeights = [];
+
+			foreach (object dungeonInfo in dungeons)
+			{
+				// new SpawnWeightContext(moon: relevantMoonInfo, dungeon: null, weather: null)
+				object ctx = Activator.CreateInstance(SpawnWeightContextType, relevantMoonInfo, null, null);
+
+				object weights = Get(dungeonInfo, "Weights");
+				object rarityObj = Traverse.Create(weights).Method("GetFor", new object[] { relevantMoonInfo, ctx }).GetValue();
+				int rarity = rarityObj == null ? 0 : Convert.ToInt32(rarityObj);
+
 				if (rarity > 0)
 				{
 					possibleDungeons.Add(dungeonInfo);
@@ -93,26 +141,23 @@ namespace TerminalUtils.Compatibility
 			}
 
 			Plugin.debugLogger.LogDebug(
-				$"Found {possibleDungeons.Count} possible dungeons for level {level.PlanetName}: {string.Join(", ", possibleDungeons.Select(d => d.Key))}"
+				$"Found {possibleDungeons.Count} possible dungeons for level {level.PlanetName}: "
+					+ string.Join(", ", possibleDungeons.Select(d => Get(d, "Key")))
 			);
 
-			// sort by rarity
 			for (int i = 0; i < possibleDungeons.Count; i++)
 			{
-				string dungeonName = possibleDungeons[i]
-					.Key.Key.RemoveLeadingNumbers()
-					.ToCapitalized()
-					.ReplaceNumbersWithWords()
-					.Replace(" ", "_");
-				int weight = (int)possibleDungeonWeights[i];
+				string dungeonName = (string)Get(Get(possibleDungeons[i], "Key"), "Key");
+				dungeonName = (string)CallStatic(StringExtensionsType, "RemoveLeadingNumbers", dungeonName);
+				dungeonName = (string)CallStatic(StringExtensionsType, "ToCapitalized", dungeonName);
+				dungeonName = ((string)CallStatic(StringExtensionsType, "ReplaceNumbersWithWords", dungeonName)).Replace(" ", "_");
 
-				result[dungeonName] = weight;
+				result[dungeonName] = possibleDungeonWeights[i];
 			}
 
 			return result;
 		}
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public string GetStoreItemNameOverride(Item item)
 		{
 			if (item == null)
@@ -120,31 +165,33 @@ namespace TerminalUtils.Compatibility
 				return null;
 			}
 
-			DawnItemInfo info = item.GetDawnInfo();
-			DawnShopItemInfo shopInfo = info.ShopInfo;
+			object info = GetItemDawnInfo(item);
+			object shopInfo = Get(info, "ShopInfo");
 			if (shopInfo == null)
 			{
 				return item.itemName;
 			}
 
-			TerminalPurchaseResult result = shopInfo.DawnPurchaseInfo.PurchasePredicate.CanPurchase();
-			if (result is TerminalPurchaseResult.FailedPurchaseResult failedResult)
+			object predicate = Get(Get(shopInfo, "DawnPurchaseInfo"), "PurchasePredicate");
+			object result = Traverse.Create(predicate).Method("CanPurchase").GetValue();
+
+			if (result?.GetType().Name == "FailedPurchaseResult")
 			{
-				if (failedResult.OverrideName != null)
+				string overrideName = Get(result, "OverrideName") as string;
+				if (overrideName != null)
 				{
 					Plugin.debugLogger.LogCustom(
-						$"Overriding name of {info.Key} with {failedResult.OverrideName}",
+						$"Overriding name of {Get(info, "Key")} with {overrideName}",
 						BepInEx.Logging.LogLevel.Debug,
 						MrovLib.LoggingType.Debug
 					);
 				}
-				return failedResult.OverrideName ?? item.itemName;
+				return overrideName ?? item.itemName;
 			}
 
 			return item.itemName;
 		}
 
-		[MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
 		public bool IsItemInStore(Item item)
 		{
 			if (item == null)
@@ -152,14 +199,15 @@ namespace TerminalUtils.Compatibility
 				return false;
 			}
 
-			DawnItemInfo info = item.GetDawnInfo();
-			ITerminalPurchasePredicate shopInfo = info?.ShopInfo?.DawnPurchaseInfo?.PurchasePredicate;
-			if (shopInfo == null)
+			object info = GetItemDawnInfo(item);
+			object predicate = Get(Get(Get(info, "ShopInfo"), "DawnPurchaseInfo"), "PurchasePredicate");
+			if (predicate == null)
 			{
 				return false;
 			}
 
-			return shopInfo.CanPurchase() is not TerminalPurchaseResult.HiddenPurchaseResult;
+			object result = Traverse.Create(predicate).Method("CanPurchase").GetValue();
+			return result?.GetType().Name != "HiddenPurchaseResult";
 		}
 	}
 }
