@@ -63,7 +63,7 @@ namespace TerminalUtils.Nodes
 					.ToArray();
 				table.AddRow(rowItems);
 
-				if (itemCount % 3 == 0)
+				if (itemCount % ConfigManager.DivideMoons.Value == 0)
 				{
 					itemCount = 1;
 					table.AddRow(currentPreviewTypes.Select(_ => "").ToArray());

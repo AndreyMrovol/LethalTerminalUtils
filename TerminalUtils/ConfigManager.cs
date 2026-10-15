@@ -25,6 +25,7 @@ namespace TerminalUtils
 		public static ConfigEntry<string> SortInfoType { get; private set; }
 
 		public static ConfigEntry<bool> DisplayLockedMoons { get; private set; }
+		public static ConfigEntry<int> DivideMoons { get; private set; }
 
 		public static ConfigEntry<string> StoreSortInfoType { get; private set; }
 
@@ -78,6 +79,13 @@ namespace TerminalUtils
 				"Display Locked Moons",
 				true,
 				"Whether to display locked moons in the moon catalogue."
+			);
+
+			DivideMoons = configFile.Bind(
+				"Moons",
+				"Divide Moons page into groups",
+				3,
+				"Set the number of moons to divide the page into. 0 means no division."
 			);
 
 			DivideStore = configFile.Bind(
