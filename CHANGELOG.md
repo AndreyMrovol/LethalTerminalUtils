@@ -1,3 +1,8 @@
+# 0.0.17
+
+- fixed crashes with Utils not working correctly without Dawn present (thanks, `kenji`!)
+- added a config option to adjust size of moon groups (thanks, `zangtooshort`!)
+
 # 0.0.16
 
 - fixed an issue with `Scan` command not displaying any scrap (thanks, `systmantha`!)
