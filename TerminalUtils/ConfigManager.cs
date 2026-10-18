@@ -18,7 +18,6 @@ namespace TerminalUtils
 		public static ConfigEntry<LoggingType> LoggingLevels { get; private set; }
 
 		public static ConfigEntry<int> LinesToScroll { get; private set; }
-		public static ConfigEntry<bool> UseLegacyScrollBehavior { get; private set; }
 
 		public static ConfigEntry<string> PreviewInfoType { get; private set; }
 		public static ConfigEntry<string> FilterInfoType { get; private set; }
@@ -41,12 +40,6 @@ namespace TerminalUtils
 			LoggingLevels = configFile.Bind("Debug", "Logging Levels", LoggingType.Basic, "Set the logging level for the mod");
 
 			LinesToScroll = configFile.Bind("General", "Lines to Scroll", 10, "Number of lines to scroll per mouse wheel tick");
-			UseLegacyScrollBehavior = configFile.Bind(
-				"General",
-				"Use Legacy Scroll Behavior",
-				false,
-				"Whether to use the legacy scroll behavior (from TerminalFormatter)"
-			);
 
 			PreviewInfoType = configFile.Bind(
 				"Preferences",

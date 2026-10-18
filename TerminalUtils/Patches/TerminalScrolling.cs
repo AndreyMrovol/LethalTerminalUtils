@@ -71,14 +71,7 @@ namespace TerminalUtils.Patches
 				int amountOfLinesInCurrentPage = amountOfLines.Matches(CurrentText.Trim()).Count + 3; // why 3? because fuck you
 
 				int numLines;
-				if (ConfigManager.UseLegacyScrollBehavior.Value)
-				{
-					numLines = CurrentText.Count(c => c.Equals('\n')) + 1;
-				}
-				else
-				{
-					numLines = amountOfLinesInCurrentPage;
-				}
+				numLines = amountOfLinesInCurrentPage;
 
 				// Calculate relative scroll amount using the number of lines in the current terminal page.
 				int numLinesToScroll = ConfigManager.LinesToScroll.Value;
