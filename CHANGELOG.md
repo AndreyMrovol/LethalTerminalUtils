@@ -1,3 +1,8 @@
+# 0.0.18
+
+- fixed an issue with moon catalogue grouping dividing by 0 (thanks, `bannbaoo`!)
+- added a config option to hide modded company moons in the moon catalogue (thanks, `bannbaoo`!)
+
 # 0.0.17
 
 - fixed crashes with Utils not working correctly without Dawn present (thanks, `kenji`!)
