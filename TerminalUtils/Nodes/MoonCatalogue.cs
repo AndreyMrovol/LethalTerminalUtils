@@ -48,6 +48,11 @@ namespace TerminalUtils.Nodes
 					continue;
 				}
 
+				if (ConfigManager.HideCompanyMoons.Value && LevelHelper.CompanyMoons.Contains(level))
+				{
+					continue;
+				}
+
 				string[] rowItems = currentPreviewTypes
 					.Select(info =>
 					{

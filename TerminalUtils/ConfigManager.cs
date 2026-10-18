@@ -24,6 +24,7 @@ namespace TerminalUtils
 		public static ConfigEntry<string> SortInfoType { get; private set; }
 
 		public static ConfigEntry<bool> DisplayLockedMoons { get; private set; }
+		public static ConfigEntry<bool> HideCompanyMoons { get; private set; }
 		public static ConfigEntry<int> DivideMoons { get; private set; }
 
 		public static ConfigEntry<string> StoreSortInfoType { get; private set; }
@@ -72,6 +73,13 @@ namespace TerminalUtils
 				"Display Locked Moons",
 				true,
 				"Whether to display locked moons in the moon catalogue."
+			);
+
+			HideCompanyMoons = configFile.Bind(
+				"Moons",
+				"Hide Company Moons",
+				false,
+				"Whether to hide modded company moons in the moon catalogue."
 			);
 
 			DivideMoons = configFile.Bind(
